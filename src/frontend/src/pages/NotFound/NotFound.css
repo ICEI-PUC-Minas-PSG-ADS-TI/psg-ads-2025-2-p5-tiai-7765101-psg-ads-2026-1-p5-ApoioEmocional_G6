@@ -1,0 +1,30 @@
+/* ===== 404 Page ===== */
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  font-size: 1.25rem;
+  color: var(--muted-foreground);
+  margin-bottom: 1rem;
+}
+
+.not-found a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.not-found a:hover {
+  opacity: 0.9;
+}

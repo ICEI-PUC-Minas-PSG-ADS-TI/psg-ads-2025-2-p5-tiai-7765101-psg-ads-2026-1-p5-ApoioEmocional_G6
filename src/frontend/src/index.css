@@ -68,10 +68,6 @@ button {
 }
 
 /* ===== Layout ===== */
-.page-full {
-  min-height: 100vh;
-}
-
 .flex-center {
   display: flex;
   align-items: center;
@@ -193,14 +189,6 @@ button {
   .grid-2 {
     grid-template-columns: 1fr 1fr;
   }
-}
-
-.main-content {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
 }
 
 /* ===== Typography ===== */
@@ -351,107 +339,6 @@ button {
   color: var(--foreground);
 }
 
-/* ===== Login Page ===== */
-.login-page {
-  min-height: 100vh;
-  display: flex;
-}
-
-.login-illustration {
-  display: none;
-  flex: 1;
-  background: var(--gradient-soft);
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-}
-
-@media (min-width: 1024px) {
-  .login-illustration {
-    display: flex;
-  }
-}
-
-.login-illustration img {
-  max-width: 28rem;
-  width: 100%;
-}
-
-.login-form-side {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .login-form-side {
-    padding: 3rem;
-  }
-}
-
-.login-card {
-  width: 100%;
-  max-width: 28rem;
-  margin: 0 auto;
-}
-
-.login-card-inner {
-  background: var(--card);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-card);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.login-header {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.login-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--foreground);
-}
-
-.login-subtitle {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.login-links {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.login-disclaimer {
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
-  text-align: center;
-  line-height: 1.5;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-}
-
 /* ===== Mood Selector ===== */
 .mood-buttons {
   display: flex;
@@ -562,67 +449,6 @@ button {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--primary);
-}
-
-/* ===== Support Card ===== */
-.support-info {
-  background: var(--gradient-soft);
-  border-radius: 0.75rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.support-name {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--foreground);
-}
-
-.support-phone {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-}
-
-.support-phone svg {
-  width: 0.875rem;
-  height: 0.875rem;
-}
-
-/* ===== 404 Page ===== */
-.not-found {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--muted);
-  text-align: center;
-}
-
-.not-found h1 {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.not-found p {
-  font-size: 1.25rem;
-  color: var(--muted-foreground);
-  margin-bottom: 1rem;
-}
-
-.not-found a {
-  color: var(--primary);
-  text-decoration: underline;
-}
-
-.not-found a:hover {
-  opacity: 0.9;
 }
 
 /* ===== Toaster (sonner) ===== */

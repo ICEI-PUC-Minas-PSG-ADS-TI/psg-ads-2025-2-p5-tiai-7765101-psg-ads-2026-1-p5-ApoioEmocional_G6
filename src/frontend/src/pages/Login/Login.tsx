@@ -1,3 +1,4 @@
+import "./Login.css";
 import { motion } from "framer-motion";
 import LoginForm from "@/components/LoginForm";
 import loginIllustration from "@/assets/login-illustration.png";
