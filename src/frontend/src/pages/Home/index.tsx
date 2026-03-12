@@ -6,6 +6,7 @@ import JournalCard from "@/components/JournalCard";
 import InsightsCard from "@/components/InsightsCard";
 import CalmNowCard from "@/components/CalmNowCard";
 import { Phone } from "lucide-react";
+import NeedHelp from "@/components/NeedHelp";
 
 const Home = () => {
   return (
@@ -18,7 +19,7 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           className="home-heading-page"
         >
-          Good to see you 👋
+          Boas vindas 👋
         </motion.h1>
 
         <div className="home-grid-2">
@@ -31,26 +32,8 @@ const Home = () => {
         <div className="home-grid-2">
           <CalmNowCard />
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="support-card support-card-stack"
-          >
-            <h3 className="support-heading">Need help?</h3>
-            <p className="support-text">
-              If you are going through a difficult moment, you can seek help.
-            </p>
-            <div className="support-info">
-              <p className="support-name">
-                CVV – Centro de Valorização da Vida
-              </p>
-              <p className="support-phone">
-                <Phone size={14} /> 188
-              </p>
-              <span className="support-text-small">Available 24/7 in Brazil</span>
-            </div>
-          </motion.div>
+          <NeedHelp />
+
         </div>
       </main>
     </div>

@@ -25,15 +25,15 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     >
       <div className="login-card-inner">
         <div className="login-header">
-          <h2 className="login-title">Welcome back</h2>
+          <h2 className="login-title">Bem-vindo de volta</h2>
           <p className="login-subtitle">
-            Track your emotions and take care of your mind.
+            Acompanhe suas emoções e cuide da sua mente.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           <Input label="Email" type="email" placeholder="you@example.com" value={email} onChange={setEmail} />
-          <Input label="Password" type="password" placeholder="••••••••" value={password} onChange={setPassword} />
+          <Input label="Senha" type="password" placeholder="••••••••" value={password} onChange={setPassword} />
 
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <button type="submit" className="login-btn login-btn-primary login-btn-full">
@@ -43,12 +43,12 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         </form>
 
         <div className="login-links">
-          <button className="login-btn-link">Create account</button>
-          <button className="login-btn-text">Forgot password?</button>
+          <button className="login-btn-link">Criar conta</button>
+          <button className="login-btn-text">Esqueceu a senha?</button>
         </div>
 
         <p className="login-disclaimer">
-          This platform offers emotional support tools and does not replace professional therapy.
+          Esta plataforma oferece ferramentas de suporte emocional e não substitui a terapia profissional.
         </p>
       </div>
     </motion.div>
