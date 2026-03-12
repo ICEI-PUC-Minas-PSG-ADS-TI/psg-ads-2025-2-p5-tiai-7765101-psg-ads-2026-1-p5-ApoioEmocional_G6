@@ -8,47 +8,46 @@ import { Phone } from "lucide-react";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="page-full">
       <Navbar />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <main className="container main-content">
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl font-semibold text-foreground"
+          className="heading-page"
         >
           Good to see you 👋
         </motion.h1>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid-2">
           <MoodSelector />
           <JournalCard />
         </div>
 
         <InsightsCard />
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid-2">
           <CalmNowCard />
 
-          {/* Support info */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-card rounded-2xl card-shadow p-6 space-y-3"
+            className="card card-stack"
           >
-            <h3 className="text-lg font-semibold text-foreground">Need help?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="heading-card">Need help?</h3>
+            <p className="text-body">
               If you are going through a difficult moment, you can seek help.
             </p>
-            <div className="gradient-soft rounded-xl p-4 space-y-1">
-              <p className="text-sm font-semibold text-foreground">
+            <div className="support-info">
+              <p className="support-name">
                 CVV – Centro de Valorização da Vida
               </p>
-              <p className="text-sm text-primary font-medium flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5" /> 188
+              <p className="support-phone">
+                <Phone size={14} /> 188
               </p>
-              <p className="text-xs text-muted-foreground">Available 24/7 in Brazil</p>
+              <span className="text-small">Available 24/7 in Brazil</span>
             </div>
           </motion.div>
         </div>

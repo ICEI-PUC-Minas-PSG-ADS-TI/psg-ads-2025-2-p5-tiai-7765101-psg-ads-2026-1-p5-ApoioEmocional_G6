@@ -31,28 +31,28 @@ const InsightsCard = () => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="bg-card rounded-2xl card-shadow p-6 space-y-6"
+      className="card insights-section"
     >
-      <h3 className="text-lg font-semibold text-foreground">Emotional Insights</h3>
+      <h3 className="heading-card">Emotional Insights</h3>
 
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground font-medium">Mood trend this week</p>
-        <div className="h-48">
+      <div>
+        <p className="chart-label">Mood trend this week</p>
+        <div className="chart-container">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={weekData}>
               <defs>
                 <linearGradient id="moodGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(214, 72%, 59%)" stopOpacity={0.3} />
-                  <stop offset="100%" stopColor="hsl(214, 72%, 59%)" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#4A90E2" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="#4A90E2" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="day" tickLine={false} axisLine={false} className="text-xs" />
+              <XAxis dataKey="day" tickLine={false} axisLine={false} style={{ fontSize: "0.75rem" }} />
               <YAxis hide domain={[0, 5]} />
               <Tooltip />
               <Area
                 type="monotone"
                 dataKey="mood"
-                stroke="hsl(214, 72%, 59%)"
+                stroke="#4A90E2"
                 fill="url(#moodGrad)"
                 strokeWidth={2}
               />
@@ -61,14 +61,14 @@ const InsightsCard = () => {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <p className="text-sm text-muted-foreground font-medium">Positive vs Negative</p>
-        <div className="h-40">
+      <div>
+        <p className="chart-label">Positive vs Negative</p>
+        <div className="chart-container-sm">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={emotionData} layout="vertical">
               <XAxis type="number" hide />
-              <YAxis type="category" dataKey="name" tickLine={false} axisLine={false} className="text-xs" width={70} />
-              <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="hsl(214, 72%, 59%)" />
+              <YAxis type="category" dataKey="name" tickLine={false} axisLine={false} style={{ fontSize: "0.75rem" }} width={70} />
+              <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="#4A90E2" />
             </BarChart>
           </ResponsiveContainer>
         </div>
