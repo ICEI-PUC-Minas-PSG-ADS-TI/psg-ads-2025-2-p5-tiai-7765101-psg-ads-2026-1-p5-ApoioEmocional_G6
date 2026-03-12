@@ -18,9 +18,9 @@ const MoodSelector = () => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="card"
+      className="mood-selector-card"
     >
-      <h3 className="heading-card" style={{ marginBottom: "1rem" }}>
+      <h3 className="mood-selector-heading">
         How are you feeling today?
       </h3>
       <div className="mood-buttons">

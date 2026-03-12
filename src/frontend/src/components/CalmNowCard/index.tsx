@@ -11,11 +11,11 @@ const CalmNowCard = () => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="card card-stack"
+      className="calm-now-card calm-now-card-stack"
     >
-      <h3 className="heading-card calm-title">
+      <h3 className="calm-now-heading calm-title">
         <Wind size={20} />
-        Need a moment to breathe?
+        Precisa de um momento para respirar?
       </h3>
 
       <AnimatePresence mode="wait">
@@ -46,15 +46,15 @@ const CalmNowCard = () => {
                 Breathe
               </motion.p>
             </div>
-            <button onClick={() => setBreathing(false)} className="btn btn-outline">
+            <button onClick={() => setBreathing(false)} className="calm-now-btn calm-now-btn-outline">
               Stop
             </button>
           </motion.div>
         ) : (
           <motion.div key="start" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <button onClick={() => setBreathing(true)} className="btn btn-primary">
-                Start Breathing Exercise
+              <button onClick={() => setBreathing(true)} className="calm-now-btn calm-now-btn-primary">
+                Iniciar Exercício de Respiração
               </button>
             </motion.div>
           </motion.div>

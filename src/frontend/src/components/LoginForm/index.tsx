@@ -36,15 +36,15 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           <Input label="Password" type="password" placeholder="••••••••" value={password} onChange={setPassword} />
 
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <button type="submit" className="btn btn-primary btn-full">
+            <button type="submit" className="login-btn login-btn-primary login-btn-full">
               Login
             </button>
           </motion.div>
         </form>
 
         <div className="login-links">
-          <button className="btn-link">Create account</button>
-          <button className="btn-text">Forgot password?</button>
+          <button className="login-btn-link">Create account</button>
+          <button className="login-btn-text">Forgot password?</button>
         </div>
 
         <p className="login-disclaimer">

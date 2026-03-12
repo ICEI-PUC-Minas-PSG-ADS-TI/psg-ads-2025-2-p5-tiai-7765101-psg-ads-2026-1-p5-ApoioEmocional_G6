@@ -2,13 +2,13 @@ import "./Navbar.css";
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
 
-const navItems = ["Home", "My Mood", "Journal", "Insights", "Calm Now"];
+const navItems = ["Inicio"];
 
 interface NavbarProps {
   active?: string;
 }
 
-const Navbar = ({ active = "Home" }: NavbarProps) => {
+const Navbar = ({ active = "Inicio" }: NavbarProps) => {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -10 }}

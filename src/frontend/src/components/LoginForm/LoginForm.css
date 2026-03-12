@@ -53,3 +53,58 @@
   padding-top: 0.5rem;
   border-top: 1px solid var(--border);
 }
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  transition: opacity 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.login-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.login-btn-primary {
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+}
+
+.login-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.login-btn-full {
+  width: 100%;
+  height: 2.75rem;
+}
+
+.login-btn-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: none;
+  padding: 0;
+}
+
+.login-btn-link:hover {
+  text-decoration: underline;
+}
+
+.login-btn-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  background: none;
+  padding: 0;
+}
+
+.login-btn-text:hover {
+  color: var(--foreground);
+}

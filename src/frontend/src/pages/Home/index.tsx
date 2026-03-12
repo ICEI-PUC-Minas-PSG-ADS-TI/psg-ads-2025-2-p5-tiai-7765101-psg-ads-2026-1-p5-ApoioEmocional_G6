@@ -12,33 +12,33 @@ const Home = () => {
     <div className="page-full">
       <Navbar />
 
-      <main className="container main-content">
+      <main className="home-container main-content">
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="heading-page"
+          className="home-heading-page"
         >
           Good to see you 👋
         </motion.h1>
 
-        <div className="grid-2">
+        <div className="home-grid-2">
           <MoodSelector />
           <JournalCard />
         </div>
 
         <InsightsCard />
 
-        <div className="grid-2">
+        <div className="home-grid-2">
           <CalmNowCard />
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="card card-stack"
+            className="support-card support-card-stack"
           >
-            <h3 className="heading-card">Need help?</h3>
-            <p className="text-body">
+            <h3 className="support-heading">Need help?</h3>
+            <p className="support-text">
               If you are going through a difficult moment, you can seek help.
             </p>
             <div className="support-info">
@@ -48,7 +48,7 @@ const Home = () => {
               <p className="support-phone">
                 <Phone size={14} /> 188
               </p>
-              <span className="text-small">Available 24/7 in Brazil</span>
+              <span className="support-text-small">Available 24/7 in Brazil</span>
             </div>
           </motion.div>
         </div>

@@ -1,4 +1,18 @@
 /* ===== Mood Selector ===== */
+.mood-selector-card {
+  background: var(--card);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+
+.mood-selector-heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
 .mood-buttons {
   display: flex;
   flex-wrap: wrap;
