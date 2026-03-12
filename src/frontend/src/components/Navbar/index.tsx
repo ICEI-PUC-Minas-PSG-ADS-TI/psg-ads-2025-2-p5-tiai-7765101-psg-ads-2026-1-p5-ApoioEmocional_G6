@@ -17,7 +17,7 @@ const Navbar = ({ active = "Inicio" }: NavbarProps) => {
       className="navbar"
     >
       <div className="navbar-inner">
-        <span className="navbar-logo">MindCare</span>
+        <span className="navbar-logo">EMOTi IA</span> /* TODO: Validar nome com o pessoal*/
 
         <div className="navbar-links">
           {navItems.map((item) => (
