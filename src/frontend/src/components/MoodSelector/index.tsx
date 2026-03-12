@@ -3,11 +3,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const moods = [
-  { emoji: "😊", label: "Great" },
-  { emoji: "🙂", label: "Good" },
+  { emoji: "😊", label: "Ótimo" },
+  { emoji: "🙂", label: "Bom" },
   { emoji: "😐", label: "Okay" },
-  { emoji: "😔", label: "Sad" },
-  { emoji: "😣", label: "Stressed" },
+  { emoji: "😔", label: "Triste" },
+  { emoji: "😣", label: "Estressado" },
 ];
 
 const MoodSelector = () => {
@@ -21,7 +21,7 @@ const MoodSelector = () => {
       className="mood-selector-card"
     >
       <h3 className="mood-selector-heading">
-        How are you feeling today?
+        Como você está se sentindo hoje?
       </h3>
       <div className="mood-buttons">
         {moods.map((mood) => (
