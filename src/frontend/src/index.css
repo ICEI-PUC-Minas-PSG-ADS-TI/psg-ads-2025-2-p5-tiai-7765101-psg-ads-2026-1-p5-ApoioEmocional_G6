@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ===== Design Tokens ===== */
+:root {
+  --background: #f5f7fb;
+  --foreground: #1e2a3a;
+  --card: #ffffff;
+  --card-foreground: #1e2a3a;
+  --primary: #4A90E2;
+  --primary-foreground: #ffffff;
+  --secondary: #7B6EF6;
+  --secondary-foreground: #ffffff;
+  --muted: #eef1f6;
+  --muted-foreground: #6b7a8d;
+  --accent: #7B6EF6;
+  --accent-foreground: #ffffff;
+  --destructive: #e53e3e;
+  --border: #e2e6ed;
+  --input-border: #e2e6ed;
+  --ring: #4A90E2;
+  --radius: 0.75rem;
+
+  --gradient-primary: linear-gradient(135deg, #4A90E2, #7B6EF6);
+  --gradient-soft: linear-gradient(135deg, #e8f0fe, #ede8fd);
+  --shadow-card: 0 4px 24px -4px rgba(74, 144, 226, 0.08);
+  --shadow-card-hover: 0 8px 32px -4px rgba(74, 144, 226, 0.15);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ===== Utilities ===== */
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.gradient-soft {
+  background: var(--gradient-soft);
+}
+
+.card-shadow {
+  box-shadow: var(--shadow-card);
+}
+
+/* ===== Toaster (sonner) ===== */
