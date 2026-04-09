@@ -1,4 +1,5 @@
 import "./Home.css";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import MoodSelector from "@/components/MoodSelector";
@@ -9,6 +10,8 @@ import { Phone } from "lucide-react";
 import NeedHelp from "@/components/NeedHelp";
 
 const Home = () => {
+  const [selectedMood, setSelectedMood] = useState<string | null>(null);
+
   return (
     <div className="page-full">
       <Navbar />
@@ -23,8 +26,8 @@ const Home = () => {
         </motion.h1>
 
         <div className="home-grid-2">
-          <MoodSelector />
-          <JournalCard />
+          <MoodSelector selectedMood={selectedMood} onSelectMood={setSelectedMood} />
+          <JournalCard selectedMood={selectedMood} />
         </div>
 
         <InsightsCard />

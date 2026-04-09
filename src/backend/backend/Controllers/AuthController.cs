@@ -31,6 +31,7 @@ namespace backend.Controllers
             {
                 Nome = dto.Nome,
                 Email = dto.Email,
+                Sobrenome = dto.Sobrenome,
                 SenhaHash = senhaHash
             };
 

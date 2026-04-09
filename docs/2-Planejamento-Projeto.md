@@ -137,10 +137,10 @@ O projeto pode utilizar a aba **Projects** do GitHub, porém é **OBRIGATÓRIO p
 
 | Responsável   | Papel                | Tarefa                                              | Início | Prazo | Status |
 | ------------- | -------------------- | --------------------------------------------------- | ------ | ----- | ------ |
-| Melissa Baia  | Facilitador Ágil     | Preencher Visão do Produto, ODS e Backlog no README | 12/03  | 15/03 | ❌      |
-| Lucas Dias    | Arquiteto de Dados   | Criar instância do Banco de Dados                   | 12/03  | 16/03 | ❌      |
-| Pedro Dias    | Tech Lead            | Criar repositório e estruturar pastas               | 12/03  | 18/03 | ❌      |
-| Arthur Coelho | Gerente de Qualidade | Criar tela Hello World conectada à API              | 15/03  | 20/03 | ❌      |
+| Melissa Baia  | Facilitador Ágil     | Preencher Visão do Produto, ODS e Backlog no README | 12/03  | 15/03 | ✔️      |
+| Lucas Dias    | Arquiteto de Dados   | Criar instância do Banco de Dados                   | 12/03  | 16/03 | ✔️      |
+| Pedro Dias    | Tech Lead            | Criar repositório e estruturar pastas               | 12/03  | 18/03 | ✔️      |
+| Arthur Coelho | Gerente de Qualidade | Criar tela Hello World conectada à API              | 15/03  | 20/03 | ✔️      |
 
 
 ---

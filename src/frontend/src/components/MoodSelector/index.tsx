@@ -1,5 +1,8 @@
 import "./MoodSelector.css";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+>>>>>>> origin/main
 import { motion } from "framer-motion";
 
 const moods = [
@@ -10,8 +13,23 @@ const moods = [
   { emoji: "😣", label: "Estressado" },
 ];
 
-const MoodSelector = () => {
-  const [selected, setSelected] = useState<string | null>(null);
+const moodMapping: { [key: string]: string } = {
+  "Ótimo": "Otimo",
+  "Bom": "Bom",
+  "Okay": "Okay",
+  "Triste": "Triste",
+  "Estressado": "Estressado",
+};
+
+interface MoodSelectorProps {
+  selectedMood: string | null;
+  onSelectMood: (mood: string) => void;
+}
+
+const MoodSelector = ({ selectedMood, onSelectMood }: MoodSelectorProps) => {
+  const handleMoodClick = (label: string) => {
+    onSelectMood(moodMapping[label]);
+  };
 
   return (
     <motion.div
@@ -24,18 +42,21 @@ const MoodSelector = () => {
         Como você está se sentindo hoje?
       </h3>
       <div className="mood-buttons">
-        {moods.map((mood) => (
-          <motion.button
-            key={mood.label}
-            whileHover={{ scale: 1.08, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSelected(mood.label)}
-            className={`mood-btn${selected === mood.label ? " selected" : ""}`}
-          >
-            <span className="mood-emoji">{mood.emoji}</span>
-            <span className="mood-label">{mood.label}</span>
-          </motion.button>
-        ))}
+        {moods.map((mood) => {
+          const backendMood = moodMapping[mood.label];
+          return (
+            <motion.button
+              key={mood.label}
+              whileHover={{ scale: 1.08, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleMoodClick(mood.label)}
+              className={`mood-btn${selectedMood === backendMood ? " selected" : ""}`}
+            >
+              <span className="mood-emoji">{mood.emoji}</span>
+              <span className="mood-label">{mood.label}</span>
+            </motion.button>
+          );
+        })}
       </div>
     </motion.div>
   );

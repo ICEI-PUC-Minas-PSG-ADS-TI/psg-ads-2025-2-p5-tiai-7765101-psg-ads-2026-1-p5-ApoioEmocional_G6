@@ -1,0 +1,41 @@
+/* ===== Login Page ===== */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+.login-illustration {
+  display: none;
+  flex: 1;
+  background: var(--gradient-soft);
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .login-illustration {
+    display: flex;
+  }
+}
+
+.login-illustration img {
+  max-width: 28rem;
+  width: 100%;
+}
+
+.login-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .login-form-side {
+    padding: 3rem;
+  }
+}
+
+

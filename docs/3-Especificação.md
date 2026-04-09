@@ -18,82 +18,21 @@ O objetivo é organizar claramente as funcionalidades, qualidades e limites da s
 
 Os **Requisitos Funcionais (RF)** descrevem o que o sistema deve fazer.
 
-📌 Cada requisito deve:
-- Representar uma funcionalidade única
-- Ser claro e objetivo
-- Orientar diretamente o desenvolvimento
-
----
-
 ## Tabela de Requisitos Funcionais
 
 | ID    | Descrição do Requisito | Prioridade |
 |-------|------------------------|------------|
-| RF-01 | O sistema deve permitir que os usuários criem uma conta informando nome, e-mail, senha e endereço. | 🔴 ALTA |
-| RF-02 | O sistema deve permitir que os usuários adicionem produtos ao carrinho de compras. | 🟡 MÉDIA |
-| RF-03 | (Descreva aqui o requisito funcional 3 do seu sistema) | (Alta/Média/Baixa) |
-| RF-04 | (Descreva aqui o requisito funcional 4 do seu sistema) | (Alta/Média/Baixa) |
-| RF-05 | (Descreva aqui o requisito funcional 5 do seu sistema) | (Alta/Média/Baixa) |
-| RF-06 | (Descreva aqui o requisito funcional 6 do seu sistema) | (Alta/Média/Baixa) |
-| RF-07 | (Descreva aqui o requisito funcional 7 do seu sistema) | (Alta/Média/Baixa) |
-| RF-08 | (Descreva aqui o requisito funcional 8 do seu sistema) | (Alta/Média/Baixa) |
-| RF-09 | (Descreva aqui o requisito funcional 9 do seu sistema) | (Alta/Média/Baixa) |
-| RF-10 | (Descreva aqui o requisito funcional 10 do seu sistema) | (Alta/Média/Baixa) |
+| RF-01 | O sistema deve permitir que os usuários criem uma conta informando nome, e-mail, senha e informações sobre sua rotina (trabalho, estudo, atividade física, relacionamentos). | 🔴 ALTA |
 
 ---
 
 # 3.2 Histórias de Usuário
 
-Cada história deve seguir o padrão ensinado na disciplina:
-
-> **Como** [persona],  
-> **eu quero** [funcionalidade],  
-> **para que** [benefício].
-
-⚠️ **ATENÇÃO:**  
-Cada História de Usuário deve estar associada a um Requisito Funcional específico (RF-XX).
-
----
-
-## Exemplos
-
-**História 1 (relacionada ao RF-01):**  
-Como usuário, quero registrar minhas tarefas para não esquecer de fazê-las.
-
-**História 2 (relacionada ao RF-02):**  
-Como administrador, quero alterar permissões para controlar o acesso ao sistema.
-
----
-
 ## Histórias do Projeto
-
----
 
 ### História 1 (relacionada ao RF-01)
 
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
-
----
-
-### História 2 (relacionada ao RF-02)
-
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
-
----
-
-### História 3 (relacionada ao RF-__)
-
-Como __________________________________________  
-Eu quero _______________________________________  
-Para que _______________________________________
-
----
-
-> 💡 Dica: Agrupe as histórias por módulo (Cadastro, Relatórios, Pagamentos, etc.) para melhor organização.
+Como usuário, eu quero me cadastrar na plataforma para que eu possa receber apoio emocional.
 
 ---
 
@@ -109,23 +48,17 @@ Os **Requisitos Não Funcionais (RNF)** definem características de qualidade do
 
 Eles garantem a qualidade da solução.
 
----
-
 ## Tabela de Requisitos Não Funcionais
 
 | ID     | Descrição do Requisito | Prioridade |
 |--------|------------------------|------------|
+<<<<<<< HEAD
 | RNF-01 | O sistema deve carregar as páginas em até 3 segundos. | 🟡 MÉDIA |
 | RNF-02 | O sistema deve proteger as informações dos clientes por meio de criptografia. | 🔴 ALTA |
 | RNF-03 | (Descreva aqui o requisito não funcional 3 do seu sistema) | (Alta/Média/Baixa) |
 | RNF-04 | (Descreva aqui o requisito não funcional 4 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-05 | (Descreva aqui o requisito não funcional 5 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-06 | (Descreva aqui o requisito não funcional 6 do seu sistema) | (Alta/Média/Baixa) |
-
----
 
 # 3.4 Restrições do Projeto
-
 📌 **Restrições** são limitações externas impostas ao projeto.
 
 Elas podem envolver:
@@ -137,8 +70,11 @@ Elas podem envolver:
 
 ⚠️ Diferente dos RNFs, as restrições impõem **limites fixos** ao projeto.
 
+<<<<<<< HEAD
 ---
 
+=======
+>>>>>>> origin/main
 ## Tabela de Restrições
 
 | ID  | Restrição |
@@ -167,8 +103,11 @@ Elas podem envolver:
 > Também pode ser escrito assim (if/then):  
 > - "Se o usuário tem saldo acima de X, então a opção de empréstimo estará liberada."
 
+<<<<<<< HEAD
 ---
 
+=======
+>>>>>>> origin/main
  A tabela abaixo deve ser preenchida com as regras de negócio que **impactam seu projeto**. Os textos no quadro são apenas ilustrativos.
 
 |ID    | Regra de Negócio                                                       |

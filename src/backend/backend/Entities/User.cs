@@ -10,6 +10,9 @@ namespace backend.Entities
         public string Nome { get; set; }
 
         [Required]
+        public string Sobrenome { get; set; }
+
+        [Required]
         public string Email { get; set; }
 
         [Required]
