@@ -1,4 +1,5 @@
 ﻿using backend.Entities;
+using backend.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -11,5 +12,12 @@ namespace backend.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<EmotionLog> Emotions { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EmotionLog>()
+                .Property(e => e.Emotion)
+                .HasConversion<string>();
+        }
     }
 }
