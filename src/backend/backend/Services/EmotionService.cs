@@ -2,10 +2,6 @@ using backend.DTOs;
 using backend.Entities;
 using backend.Enum;
 using backend.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace backend.Services
 {
@@ -55,8 +51,8 @@ namespace backend.Services
                 Id = added.Id,
                 UserId = added.UserId,
                 Mood = added.Emotion.ToString(),
-                CreatedAt = added.CreatedAt,
-                Diary = added.Diary
+                CreatedAt = added.CreatedAt
+                ,Diary = added.Diary
             };
         }
 
@@ -68,8 +64,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt,
-                Diary = e.Diary
+                CreatedAt = e.CreatedAt
+                ,Diary = e.Diary
             });
         }
 
@@ -81,8 +77,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt,
-                Diary = e.Diary
+                CreatedAt = e.CreatedAt
+                ,Diary = e.Diary
             });
         }
 
@@ -94,8 +90,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt,
-                Diary = e.Diary
+                CreatedAt = e.CreatedAt
+                ,Diary = e.Diary
             });
         }
     }
