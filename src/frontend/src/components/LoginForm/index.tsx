@@ -1,8 +1,9 @@
 import "./LoginForm.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
-import { api } from "@/services/api";
+import { login } from "@/services/auth";
 
 interface LoginFormProps {
   onLogin: () => void;
@@ -15,19 +16,12 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try{
-      const response = await api.post("/Auth/login", {
-        email,
-        senha: password
-      });
-
-      localStorage.setItem("token", response.data.token);
+    try {
+      await login({ email, senha: password });
       onLogin();
-
-    }catch(error){
+    } catch (error) {
       console.error("Erro ao fazer login:", error);
     }
-
   };
 
   return (
@@ -57,7 +51,9 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         </form>
 
         <div className="login-links">
-          <button className="login-btn-link">Criar conta</button>
+          <Link to="register" className="login-btn-link">
+            Criar conta
+          </Link>
           <button className="login-btn-text">Esqueceu a senha?</button>
         </div>
 
