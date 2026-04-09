@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
+import { register } from "@/services/auth";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -11,9 +12,21 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/");
+
+    try {
+      await register({
+        nome: firstName,
+        sobrenome: lastName,
+        email,
+        senha: password,
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.error("Erro ao registrar:", error);
+    }
   };
 
   return (

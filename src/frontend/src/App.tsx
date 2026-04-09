@@ -10,6 +10,12 @@ import NotFound from "./pages/NotFound";
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const token = localStorage.getItem('token');
+
+  if (token && !loggedIn) {
+    setLoggedIn(true);
+  }
+
   return (
     <>
       <Toaster />

@@ -1,8 +1,4 @@
 import "./MoodSelector.css";
-<<<<<<< HEAD
-import { useState } from "react";
-=======
->>>>>>> origin/main
 import { motion } from "framer-motion";
 
 const moods = [
