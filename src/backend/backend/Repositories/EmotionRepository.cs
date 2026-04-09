@@ -55,8 +55,6 @@ namespace backend.Repositories
                 .OrderByDescending(e => e.CreatedAt)
                 .ToListAsync();
         }
-<<<<<<< HEAD
-
         public async Task<EmotionLog?> GetLatestAsync(Guid userId)
         {
             return await _context.Emotions
@@ -64,7 +62,5 @@ namespace backend.Repositories
                 .OrderByDescending(e => e.CreatedAt)
                 .FirstOrDefaultAsync();
         }
-=======
->>>>>>> lucas/atualizando-table-users
     }
 }

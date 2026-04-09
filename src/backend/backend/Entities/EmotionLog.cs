@@ -7,9 +7,6 @@ namespace backend.Entities
         public Guid UserId { get; set; }
         public EmotionsEnum Emotion { get; set; } 
         public DateTime CreatedAt { get; set; }
-<<<<<<< HEAD
         public string? Diary { get; set; }
-=======
->>>>>>> lucas/atualizando-table-users
     }
 }

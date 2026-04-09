@@ -8,16 +8,10 @@ namespace backend.Repositories
     public interface IEmotionRepository
     {
         Task<EmotionLog> AddAsync(EmotionLog log);
-<<<<<<< HEAD
-        // ... existing methods
+
         Task<IEnumerable<EmotionLog>> GetByUserIdAsync(Guid userId);
         Task<IEnumerable<EmotionLog>> GetTodayAsync(Guid userId);
         Task<IEnumerable<EmotionLog>> GetThisWeekAsync(Guid userId);
         Task<EmotionLog?> GetLatestAsync(Guid userId);
-=======
-        Task<IEnumerable<EmotionLog>> GetByUserIdAsync(Guid userId);
-        Task<IEnumerable<EmotionLog>> GetTodayAsync(Guid userId);
-        Task<IEnumerable<EmotionLog>> GetThisWeekAsync(Guid userId);
->>>>>>> lucas/atualizando-table-users
     }
 }

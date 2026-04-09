@@ -9,9 +9,6 @@ namespace backend.DTOs
         public Guid UserId { get; set; }
         public string Mood { get; set; }
         public DateTime CreatedAt { get; set; }
-<<<<<<< HEAD
         public string? Diary { get; set; }
-=======
->>>>>>> lucas/atualizando-table-users
     }
 }

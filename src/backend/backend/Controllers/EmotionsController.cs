@@ -33,7 +33,6 @@ namespace backend.Controllers
         public async Task<IActionResult> Post([FromBody] EmotionRequest request)
         {
             var userId = GetUserIdFromClaims();
-<<<<<<< HEAD
             try
             {
                 var result = await _service.RegisterEmotionAsync(request, userId);
@@ -47,10 +46,6 @@ namespace backend.Controllers
             {
                 return StatusCode(429, new { message = ex.Message });
             }
-=======
-            var result = await _service.RegisterEmotionAsync(request, userId);
-            return CreatedAtAction(nameof(GetAll), new { id = result.Id }, result);
->>>>>>> lucas/atualizando-table-users
         }
 
         [HttpGet]

@@ -2,6 +2,10 @@ using backend.DTOs;
 using backend.Entities;
 using backend.Enum;
 using backend.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.Services
 {
@@ -21,7 +25,6 @@ namespace backend.Services
                 throw new ArgumentException("Invalid mood value");
             }
 
-<<<<<<< HEAD
             // Enforce 8-hour interval between registrations
             var latest = await _repository.GetLatestAsync(userId);
             var now = DateTime.UtcNow;
@@ -36,19 +39,13 @@ namespace backend.Services
                 }
             }
 
-=======
->>>>>>> lucas/atualizando-table-users
             var log = new EmotionLog
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 Emotion = mood,
-<<<<<<< HEAD
                 CreatedAt = DateTime.UtcNow,
                 Diary = request.Diary
-=======
-                CreatedAt = DateTime.UtcNow
->>>>>>> lucas/atualizando-table-users
             };
 
             var added = await _repository.AddAsync(log);
@@ -58,11 +55,8 @@ namespace backend.Services
                 Id = added.Id,
                 UserId = added.UserId,
                 Mood = added.Emotion.ToString(),
-                CreatedAt = added.CreatedAt
-<<<<<<< HEAD
-                ,Diary = added.Diary
-=======
->>>>>>> lucas/atualizando-table-users
+                CreatedAt = added.CreatedAt,
+                Diary = added.Diary
             };
         }
 
@@ -74,11 +68,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt
-<<<<<<< HEAD
-                ,Diary = e.Diary
-=======
->>>>>>> lucas/atualizando-table-users
+                CreatedAt = e.CreatedAt,
+                Diary = e.Diary
             });
         }
 
@@ -90,11 +81,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt
-<<<<<<< HEAD
-                ,Diary = e.Diary
-=======
->>>>>>> lucas/atualizando-table-users
+                CreatedAt = e.CreatedAt,
+                Diary = e.Diary
             });
         }
 
@@ -106,11 +94,8 @@ namespace backend.Services
                 Id = e.Id,
                 UserId = e.UserId,
                 Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt
-<<<<<<< HEAD
-                ,Diary = e.Diary
-=======
->>>>>>> lucas/atualizando-table-users
+                CreatedAt = e.CreatedAt,
+                Diary = e.Diary
             });
         }
     }

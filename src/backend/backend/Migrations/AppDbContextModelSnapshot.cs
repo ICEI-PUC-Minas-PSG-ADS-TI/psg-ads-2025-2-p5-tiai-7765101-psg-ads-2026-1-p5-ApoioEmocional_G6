@@ -31,12 +31,9 @@ namespace backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
                     b.Property<string>("Diary")
                         .HasColumnType("nvarchar(max)");
 
-=======
->>>>>>> lucas/atualizando-table-users
                     b.Property<string>("Emotion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
