@@ -1,150 +1,161 @@
 
 # 4. Projeto da Solução
 
-> ⚠️ **Aviso aos Squads (Software House)**
->
-> Esta seção **não deve ser preenchida integralmente antes da codificação**.
-> Trata-se de um **Documento Vivo**, que deverá ser atualizado **incrementalmente a cada Sprint**, refletindo fielmente o código real implementado.
-
----
-
 ## 4.1 Arquitetura da Solução (Sprint 1 e 2)
-
-Apresente um **diagrama macro** demonstrando como os componentes do sistema se comunicam.
-
-A arquitetura deve refletir o modelo de **fatias verticais**, evidenciando o fluxo:
 
 **Front-end → API (Back-end) → Banco de Dados**
 
-Semelhante à imagem abaixo:
-
-![Exemplo de Arquitetura](https://uds.com.br/blog/wp-content/uploads/2024/09/Imagem-1-Comparativo-ilustrativo-das-diferencas-entre-front-end-e-back-end.jpg)
-
-
-
- **Fonte:** [Guia Completo de Desenvolvimento de Software - UDS](https://uds.com.br/blog/desenvolvimento-de-software-guia-completo/) <br><br>
- 
- ### 📎 Inserir o Diagrama de Arquitetura do Projeto do Grupo
-🚨 O grupo deverá inserir aqui a imagem
-
-
----
-🔧**Ferramentas recomendadas:**
-- Draw.io
-- Lucidchart
-- Figma
+![Exemplo de Arquitetura](images/diagrama-emotai.png)
 
 ---
 
 ## 4.2 Tecnologias Utilizadas (Sprint 1)
 
-Descreva as tecnologias, linguagens, frameworks, bibliotecas e serviços escolhidos pelo Squad.
-
 | Dimensão | Tecnologia Escolhida |
 |----------|----------------------|
-| Banco de Dados (SGBD) | Ex: SQL Server, PostgreSQL ou MongoDB |
-| Back-end (API) | Ex: C# (.NET Core) |
-| Front-end / Mobile | Ex: HTML + CSS + JavaScript, React ou Flutter |
-| Hospedagem / Deploy | Ex: Azure, AWS, Render ou Railway |
+| Banco de Dados (SGBD) | SQL Server |
+| Back-end (API) | C# (.NET Core) |
+| Front-end / Mobile | React + TypeScript |
+| Hospedagem / Deploy |  |
 | Gestão e Versionamento | GitHub e GitHub Projects (Kanban) |
-
- ⚠️ **Observação:**
- - GitHub Pages não executa back-end.
- - Utilize apenas tecnologias realmente implementadas.
 
 ---
 
 ##  4.3 Wireframes ou Mockups (A partir da Sprint 2)
 
-Apresente os protótipos das telas (Wireframes/Mockups) apenas das funcionalidades que estão sendo implementadas na Sprint atual.
+## 📌 Tela de Cadastro (RF-01)
 
-Cada Wireframe ou Mockups devem estar associados a pelo menos:
-
-- Um Requisito Funcional (RF-XX)
-- Uma História de Usuário
-
-
-## 📌 Exemplo Ilustrativo – Tela de Cadastro (RF-01)
-
-**História associada:** Como usuário, quero criar uma conta para acessar o sistema.
-
-Representação simplificada do Wireframe:
-
-<img src="images/TelaCadastro.png" width="80%">
-
+**História associada:** Como usuário, quero me cadastrar na plataforma para que eu possa receber apoio emocional
 **Descrição:** A interface contempla todos os campos exigidos pelo RF-01 e permite persistência no banco após validação no backend.
 
----
-🔧 **Ferramentas sugeridas:**
-- Figma  
-- MarvelApp  
-- Balsamiq  
----
-
-### 📎 Inserir AQUI Wireframes/ Mockups do Projeto de Software
-
-🚨 O grupo deverá inserir aqui a imagem
-
-
-
----
+[Colocar wireframe aqui]
 
 ## 4.4 Modelagem de Dados (Sprint 2 e 3)
 
-O sistema exige persistência de dados.
-
-A documentação do banco seguirá a abordagem de **entrega contínua**, sendo expandida conforme evolução do projeto.
-
----
-
 ### 4.4.1 Script Físico (Entrega na Sprint 2 - MVP)
 
-Para a primeira fatia vertical (MVP), o Squad deverá entregar o **script de criação das tabelas ou coleções utilizadas**.
-
-#### 🔹 Para Banco Relacional (SQL)
-
-Incluir:
-
-- Comandos `CREATE TABLE`
-- Definição de chave primária (PK)
-- Definição de chaves estrangeiras (FK)
-
-**Exemplo:**
-
 ```sql
-CREATE TABLE Usuario (
-    Id INT PRIMARY KEY,
-    Nome VARCHAR(100),
-    Email VARCHAR(150) UNIQUE,
-    Senha VARCHAR(200)
-);
+USE [master]
+GO
+
+/****** Object:  Database [EmotIA]    Script Date: 08/04/2026 22:38:10 ******/
+CREATE DATABASE [EmotIA]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'EmotIA', FILENAME = N'D:\Arquivos de Programas\MSSQL15.SQLEXPRESS\MSSQL\DATA\EmotIA.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'EmotIA_log', FILENAME = N'D:\Arquivos de Programas\MSSQL15.SQLEXPRESS\MSSQL\DATA\EmotIA_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [EmotIA].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [EmotIA] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [EmotIA] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [EmotIA] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [EmotIA] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [EmotIA] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [EmotIA] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [EmotIA] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [EmotIA] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [EmotIA] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [EmotIA] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [EmotIA] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [EmotIA] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+
+ALTER DATABASE [EmotIA] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [EmotIA] SET  READ_WRITE 
+GO
 ```
 
----
+### 📁 Arquivo .sql
 
-### Para Banco NoSQL
+O arquivo .sql ou .js está salvo na pasta: src/bd
 
-Incluir a estrutura dos documentos JSON (Schema).
-
-**Exemplo:**
-
-```json
-{
-  "nome": "João Silva",
-  "email": "joao@email.com",
-  "senha": "hash_da_senha"
-}
-```
-
-### 📁 Obrigatório
-
-O arquivo .sql ou .js deve ser salvo na pasta: src/bd
-
- - É permitido colar um trecho do script no README apenas para visualização rápida.
- 
----
 ### 4.4.2 Representação do Modelo Físico de Dados (Entrega na Sprint 3 - Core)
-
 
 > **Fundamentação:** Os modelos de dados físicos fornecem detalhes minuciosos que auxiliam administradores e desenvolvedores na implementação da lógica de negócios em um banco de dados real.
 > Eles incluem elementos não especificados no modelo lógico, como:
