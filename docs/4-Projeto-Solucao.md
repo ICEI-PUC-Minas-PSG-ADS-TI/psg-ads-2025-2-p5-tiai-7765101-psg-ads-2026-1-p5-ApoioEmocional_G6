@@ -1,56 +1,23 @@
 
 # 4. Projeto da Solução
 
-> ⚠️ **Aviso aos Squads (Software House)**
->
-> Esta seção **não deve ser preenchida integralmente antes da codificação**.
-> Trata-se de um **Documento Vivo**, que deverá ser atualizado **incrementalmente a cada Sprint**, refletindo fielmente o código real implementado.
-
----
-
 ## 4.1 Arquitetura da Solução (Sprint 1 e 2)
-
-Apresente um **diagrama macro** demonstrando como os componentes do sistema se comunicam.
-
-A arquitetura deve refletir o modelo de **fatias verticais**, evidenciando o fluxo:
 
 **Front-end → API (Back-end) → Banco de Dados**
 
-Semelhante à imagem abaixo:
-
-![Exemplo de Arquitetura](https://uds.com.br/blog/wp-content/uploads/2024/09/Imagem-1-Comparativo-ilustrativo-das-diferencas-entre-front-end-e-back-end.jpg)
-
-
-
- **Fonte:** [Guia Completo de Desenvolvimento de Software - UDS](https://uds.com.br/blog/desenvolvimento-de-software-guia-completo/) <br><br>
- 
- ### 📎 Inserir o Diagrama de Arquitetura do Projeto do Grupo
-🚨 O grupo deverá inserir aqui a imagem
-
-
----
-🔧**Ferramentas recomendadas:**
-- Draw.io
-- Lucidchart
-- Figma
+![Exemplo de Arquitetura]()
 
 ---
 
 ## 4.2 Tecnologias Utilizadas (Sprint 1)
 
-Descreva as tecnologias, linguagens, frameworks, bibliotecas e serviços escolhidos pelo Squad.
-
 | Dimensão | Tecnologia Escolhida |
 |----------|----------------------|
-| Banco de Dados (SGBD) | Ex: SQL Server, PostgreSQL ou MongoDB |
-| Back-end (API) | Ex: C# (.NET Core) |
-| Front-end / Mobile | Ex: HTML + CSS + JavaScript, React ou Flutter |
-| Hospedagem / Deploy | Ex: Azure, AWS, Render ou Railway |
+| Banco de Dados (SGBD) | SQL Server |
+| Back-end (API) | C# (.NET Core) |
+| Front-end / Mobile | Ex: React + TypeScript |
+| Hospedagem / Deploy |  |
 | Gestão e Versionamento | GitHub e GitHub Projects (Kanban) |
-
- ⚠️ **Observação:**
- - GitHub Pages não executa back-end.
- - Utilize apenas tecnologias realmente implementadas.
 
 ---
 
