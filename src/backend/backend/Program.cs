@@ -9,7 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen(options =>
 {
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer {token}'",
@@ -87,18 +91,19 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
->>>>>>> origin/main
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 // ✅ Ativa CORS
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
