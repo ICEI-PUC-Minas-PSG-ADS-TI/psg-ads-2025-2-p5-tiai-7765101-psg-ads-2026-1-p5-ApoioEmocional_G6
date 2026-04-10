@@ -17,8 +17,8 @@ function getInitialTheme(): Theme {
     return stored;
   }
 
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    return "dark";
+  if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+    return "light";
   }
 
   return "light";
