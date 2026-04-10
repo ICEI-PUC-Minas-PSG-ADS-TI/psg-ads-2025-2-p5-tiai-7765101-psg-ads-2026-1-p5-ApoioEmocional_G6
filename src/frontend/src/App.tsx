@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "./contexts/theme-context";
 import AuthLayout from "./pages/AuthLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -26,7 +27,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <ThemeProvider>
       <ToastContainer 
         position="top-right"
         autoClose={4000}
@@ -48,7 +49,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 };
 
