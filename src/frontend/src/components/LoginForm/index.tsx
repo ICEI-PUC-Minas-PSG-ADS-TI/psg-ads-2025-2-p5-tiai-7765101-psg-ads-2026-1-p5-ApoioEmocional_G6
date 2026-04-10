@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
 import { login } from "@/services/auth";
+import { toast } from "react-toastify";
 
 interface LoginFormProps {
   onLogin: () => void;
@@ -17,10 +18,13 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     e.preventDefault();
 
     try {
-      await login({ email, senha: password });
+      await toast.promise(login({ email, senha: password }), {
+        pending: "Fazendo login...",
+        success: "Login realizado com sucesso",
+      });
       onLogin();
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
+    } catch (error: any) {
+      toast.error(error.response.data.message ?? "Erro ao fazer login");
     }
   };
 
