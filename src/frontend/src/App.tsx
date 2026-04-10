@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AuthLayout from "./pages/AuthLayout";
@@ -6,16 +6,24 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import { tokenExpired } from "./services/auth";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const token = localStorage.getItem('token');
-
-  if (token && !loggedIn) {
-    setLoggedIn(true);
-  }
+  useEffect(() => {
+    const checkToken = async () => {
+      if (await tokenExpired()) {
+        setLoggedIn(false);
+        localStorage.removeItem('token');
+      }
+      else {
+        setLoggedIn(true);
+      }
+    };
+    checkToken();
+  }, []);
 
   return (
     <>

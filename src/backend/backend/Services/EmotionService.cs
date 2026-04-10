@@ -22,9 +22,9 @@ namespace backend.Services
             }
 
             // Enforce 8-hour interval between registrations
-            var latest = await _repository.GetLatestAsync(userId);
+            /*var latest = await _repository.GetLatestAsync(userId);
             var now = DateTime.UtcNow;
-            if (latest != null)
+            if(latest != null)
             {
                 var diff = now - latest.CreatedAt;
                 var minInterval = TimeSpan.FromHours(8);
@@ -33,7 +33,7 @@ namespace backend.Services
                     var remaining = minInterval - diff;
                     throw new InvalidOperationException($"Registro permitido a cada 8 horas. Tente novamente em {remaining.Hours}h {remaining.Minutes}m {remaining.Seconds}s.");
                 }
-            }
+            }*/
 
             var log = new EmotionLog
             {

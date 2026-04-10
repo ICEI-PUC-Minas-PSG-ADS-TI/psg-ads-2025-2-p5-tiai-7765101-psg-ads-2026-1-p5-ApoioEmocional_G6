@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { motion } from "framer-motion";
-import { User } from "lucide-react";
+import { User, LogOut } from "lucide-react";
+import { logout } from "../../services/auth";
 
 const navItems = ["Inicio"];
 
@@ -9,6 +10,11 @@ interface NavbarProps {
 }
 
 const Navbar = ({ active = "Inicio" }: NavbarProps) => {
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
+
   return (
     <motion.nav
       initial={{ opacity: 0, y: -10 }}
@@ -32,6 +38,9 @@ const Navbar = ({ active = "Inicio" }: NavbarProps) => {
 
         <div className="navbar-avatar">
           <User size={16} />
+          <button onClick={handleLogout} className="logout-button">
+            <LogOut size={16} />
+          </button>
         </div>
       </div>
     </motion.nav>
