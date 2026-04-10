@@ -63,6 +63,12 @@
   background: var(--muted);
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .navbar-avatar {
   width: 2.25rem;
   height: 2.25rem;
@@ -75,4 +81,22 @@
 
 .navbar-avatar svg {
   color: var(--primary-foreground);
+}
+
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.logout-button:hover {
+  background: var(--muted);
+  transform: scale(1.05);
 }

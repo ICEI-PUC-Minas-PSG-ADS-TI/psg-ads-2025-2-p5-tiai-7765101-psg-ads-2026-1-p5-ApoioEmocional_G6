@@ -24,6 +24,31 @@
   --gradient-soft: linear-gradient(135deg, #e8f0fe, #ede8fd);
   --shadow-card: 0 4px 24px -4px rgba(74, 144, 226, 0.08);
   --shadow-card-hover: 0 8px 32px -4px rgba(74, 144, 226, 0.15);
+  --ring-alpha: rgba(74, 144, 226, 0.2);
+}
+
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --card: #1e293b;
+  --card-foreground: #e2e8f0;
+  --primary: #60a5fa;
+  --primary-foreground: #0f172a;
+  --secondary: #a78bfa;
+  --secondary-foreground: #0f172a;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --accent: #a78bfa;
+  --accent-foreground: #0f172a;
+  --destructive: #f87171;
+  --border: #334155;
+  --input-border: #475569;
+  --ring: #60a5fa;
+  --gradient-primary: linear-gradient(135deg, #60a5fa, #a78bfa);
+  --gradient-soft: linear-gradient(135deg, #1e293b, #1e1b4b);
+  --shadow-card: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+  --ring-alpha: rgba(96, 165, 250, 0.25);
 }
 
 /* ===== Reset & Base ===== */
@@ -40,6 +65,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -52,6 +78,32 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+}
+
+.card,
+.navbar,
+input,
+button,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--muted);
+  transform: scale(1.05);
 }
 
 /* ===== Utilities ===== */

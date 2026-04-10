@@ -2,6 +2,7 @@ import "./Navbar.css";
 import { motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
 import { logout } from "../../services/auth";
+import ThemeToggle from "../ThemeToggle";
 
 const navItems = ["Inicio"];
 
@@ -36,9 +37,12 @@ const Navbar = ({ active = "Inicio" }: NavbarProps) => {
           ))}
         </div>
 
-        <div className="navbar-avatar">
-          <User size={16} />
-          <button onClick={handleLogout} className="logout-button">
+        <div className="navbar-actions">
+          <ThemeToggle />
+          <div className="navbar-avatar">
+            <User size={16} />
+          </div>
+          <button onClick={handleLogout} className="logout-button" aria-label="Sair" title="Sair">
             <LogOut size={16} />
           </button>
         </div>
