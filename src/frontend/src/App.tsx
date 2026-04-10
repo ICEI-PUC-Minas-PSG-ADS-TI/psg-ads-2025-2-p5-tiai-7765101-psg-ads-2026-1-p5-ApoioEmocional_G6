@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toaster } from "sonner";
+import { ToastContainer } from "react-toastify";
 import AuthLayout from "./pages/AuthLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -18,7 +19,18 @@ const App = () => {
 
   return (
     <>
-      <Toaster />
+      <ToastContainer 
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={loggedIn ? <Home /> : <AuthLayout />}>

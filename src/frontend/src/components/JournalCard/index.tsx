@@ -1,8 +1,8 @@
 import "./JournalCard.css";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
 import { addEmotion } from "@/services/emotion";
+import { toast } from "react-toastify";
 
 interface JournalCardProps {
   selectedMood: string | null;
@@ -15,15 +15,13 @@ const JournalCard = ({ selectedMood }: JournalCardProps) => {
     if (!text.trim() || !selectedMood) return;
 
     try {
-      await addEmotion({
-        mood: selectedMood,
-        diary: text,
+      await toast.promise(addEmotion({ mood: selectedMood, diary: text }), {
+        pending: "Salvando reflexão...",
+        success: "Reflexão salva!",
       });
-      toast.success("Reflexão salva!");
       setText("");
-    } catch (error) {
-      console.error("Erro ao salvar:", error);
-      toast.error("Erro ao salvar reflexão");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
     }
   };
 
