@@ -3,8 +3,8 @@ import type { LoginRequest, LoginResponse, RegisterRequest } from "@/types/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post("/Auth/login", data);
-  const { token } = response.data;
-  localStorage.setItem("token", token);
+  const { token, nome } = response.data;
+  localStorage.setItem("userToken", JSON.stringify({ token, nome }));
   return response.data;
 };
 
@@ -13,14 +13,15 @@ export const register = async (data: RegisterRequest): Promise<void> => {
 };
 
 export const tokenExpired = async (): Promise<boolean> => {
-  const token = localStorage.getItem("token");
+  const userToken = getToken();
+  const {token} = JSON.parse(localStorage.getItem("userToken") || "{}");
   if (!token) {
     logout();
     return true;
   }
 
   try {
-    const response = await api.get("/api/auth/expired", {
+    const response = await api.get("/auth/expired", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -43,5 +44,12 @@ export const tokenExpired = async (): Promise<boolean> => {
 };
 
 export const logout = (): void => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("userToken");
+};
+
+export const getToken = (): string | null => {
+  const userToken = localStorage.getItem("userToken");
+  if (!userToken) return null;
+  const { token } = JSON.parse(userToken);
+  return token;
 };

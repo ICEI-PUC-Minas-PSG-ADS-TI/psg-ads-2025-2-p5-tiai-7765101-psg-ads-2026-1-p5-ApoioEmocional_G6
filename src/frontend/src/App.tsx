@@ -17,7 +17,7 @@ const App = () => {
     const checkToken = async () => {
       if (await tokenExpired()) {
         setLoggedIn(false);
-        localStorage.removeItem('token');
+        localStorage.removeItem('userToken');
       }
       else {
         setLoggedIn(true);

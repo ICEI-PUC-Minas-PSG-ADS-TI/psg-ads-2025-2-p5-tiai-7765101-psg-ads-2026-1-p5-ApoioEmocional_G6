@@ -60,7 +60,7 @@ namespace backend.Controllers
 
             var token = _tokenService.GenerateToken(usuario);
 
-            return Ok(new { token });
+            return Ok(new { token, usuario.Nome });
         }
 
         private string HashSenha(string senha)
