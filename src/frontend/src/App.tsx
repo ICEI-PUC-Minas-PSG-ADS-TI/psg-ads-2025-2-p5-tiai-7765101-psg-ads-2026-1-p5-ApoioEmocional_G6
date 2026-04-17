@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { tokenExpired } from "./services/auth";
 import "react-toastify/dist/ReactToastify.css";
+import Onboarding, { OnboardingResponses } from "./components/Onboarding";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +26,10 @@ const App = () => {
     };
     checkToken();
   }, []);
+
+  if (loggedIn) {
+    return <Onboarding onComplete={()=> {return false}} />;
+  }
 
   return (
     <ThemeProvider>
