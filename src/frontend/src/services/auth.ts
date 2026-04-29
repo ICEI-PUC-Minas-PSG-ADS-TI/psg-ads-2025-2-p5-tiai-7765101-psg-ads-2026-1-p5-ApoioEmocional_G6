@@ -53,3 +53,25 @@ export const getToken = (): string | null => {
   const { token } = JSON.parse(userToken);
   return token;
 };
+
+const NAME_ID_CLAIM =
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+
+/**
+ * Lê o `userId` (GUID) do JWT sem validar assinatura (apenas payload).
+ * Compatível com tokens emitidos pelo backend (`ClaimTypes.NameIdentifier`).
+ */
+export const getUserIdFromToken = (token: string | null): string | null => {
+  if (!token) return null;
+  try {
+    const base64Url = token.split(".")[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+    const payload = JSON.parse(atob(padded)) as Record<string, string | undefined>;
+    const id = payload["sub"] ?? payload[NAME_ID_CLAIM];
+    return id ?? null;
+  } catch {
+    return null;
+  }
+};
