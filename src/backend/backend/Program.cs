@@ -49,6 +49,8 @@ builder.Services.AddScoped<TokenService>();
 // Repository & Services
 builder.Services.AddScoped<IEmotionRepository, EmotionRepository>();
 builder.Services.AddScoped<IEmotionService, EmotionService>();
+builder.Services.AddScoped<IUserOnboardingRepository, UserOnboardingRepository>();
+builder.Services.AddScoped<IUserOnboardingService, UserOnboardingService>();
 
 // Jwt Authentication
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
