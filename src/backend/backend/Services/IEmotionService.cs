@@ -10,6 +10,6 @@ namespace backend.Services
         Task<EmotionResponse> RegisterEmotionAsync(EmotionRequest request, Guid userId);
         Task<IEnumerable<EmotionResponse>> GetAllAsync(Guid userId);
         Task<IEnumerable<EmotionResponse>> GetTodayAsync(Guid userId);
-        Task<IEnumerable<EmotionResponse>> GetThisWeekAsync(Guid userId);
+        Task<IEnumerable<EmotionDailyGroupResponse>> GetThisWeekAsync(Guid userId);
     }
 }

@@ -12,8 +12,13 @@ import {
   Bar,
 } from "recharts";
 import { getWeeklyEmotions } from "@/services/emotion";
+import type { EmotionDailyGroupResponse, EmotionResponse } from "@/types/emotion";
 
-const InsightsCard = () => {
+interface InsightsCardProps {
+  refreshTrigger?: number;
+}
+
+const InsightsCard = ({ refreshTrigger = 0 }: InsightsCardProps) => {
   const [lineChartData, setLineChartData] = useState<any[]>([]);
   const [barChartData, setBarChartData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,33 +30,70 @@ const InsightsCard = () => {
     5: "Ótimo", 4: "Bom", 3: "Okay", 2: "Triste", 1: "Estressado"
   };
 
+  const getMoodValue = (mood: string) => pesosMood[mood] || 0;
+  const getDisplayMoodLabel = (moodValue: number) => nomesMood[Math.round(moodValue)] || "Não definido";
+  const normalizeDate = (value?: string) => {
+    if (!value) return new Date();
+    const parsed = new Date(value);
+    return isNaN(parsed.getTime()) ? new Date() : parsed;
+  };
+  const formatDay = (dateValue?: string) =>
+    normalizeDate(dateValue)
+      .toLocaleDateString("pt-BR", { weekday: "short" })
+      .replace(".", "")
+      .toUpperCase();
+  const extractEmotionMood = (emotion: EmotionResponse & Record<string, unknown>) =>
+    typeof emotion.mood === "string"
+      ? emotion.mood
+      : typeof emotion.Mood === "string"
+        ? (emotion.Mood as string)
+        : "";
+  const extractGroupEmotions = (group: EmotionDailyGroupResponse & Record<string, unknown>) => {
+    if (Array.isArray(group.emotions)) return group.emotions as EmotionResponse[];
+    if (Array.isArray(group.Emotions)) return group.Emotions as EmotionResponse[];
+    return [];
+  };
+  const extractGroupDate = (group: EmotionDailyGroupResponse & Record<string, unknown>) =>
+    typeof group.date === "string"
+      ? group.date
+      : typeof group.Date === "string"
+        ? (group.Date as string)
+        : "";
+
   useEffect(() => {
     const carregarDados = async () => {
       try {
         const dadosDaApi = await getWeeklyEmotions();
+        const formatadoParaLinha = dadosDaApi.flatMap((group) => {
+          const emotions = extractGroupEmotions(group as EmotionDailyGroupResponse & Record<string, unknown>);
+          const dayLabel = formatDay(extractGroupDate(group as EmotionDailyGroupResponse & Record<string, unknown>));
 
-        const formatadoParaLinha = dadosDaApi.map((item) => {
-          const nivelNumerico = item.nivel > 0 ? item.nivel : (pesosMood[item.mood] || 0);
+          return emotions.map((emotion, index) => {
+            const moodValue = getMoodValue(
+              extractEmotionMood(emotion as EmotionResponse & Record<string, unknown>)
+            );
 
-          const dataObjeto = item.data ? new Date(item.data) : new Date();
-          const diaFormatado = isNaN(dataObjeto.getTime()) 
-            ? "???" 
-            : dataObjeto.toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "").toUpperCase();
-
-          return {
-            day: diaFormatado,
-            mood: nivelNumerico,
-            labelMood: item.mood || nomesMood[nivelNumerico] || "Não definido" 
-          };
+            return {
+              day: dayLabel,
+              xKey: `${dayLabel}-${index + 1}`,
+              showDayLabel: index === 0,
+              mood: moodValue,
+              labelMood: getDisplayMoodLabel(moodValue),
+            };
+          });
         });
 
-        const positivos = dadosDaApi.filter(e => {
-          const valor = e.nivel > 0 ? e.nivel : (pesosMood[e.mood] || 0);
+        const allEmotions = dadosDaApi.flatMap((group) =>
+          extractGroupEmotions(group as EmotionDailyGroupResponse & Record<string, unknown>)
+        );
+
+        const positivos = allEmotions.filter((emotion) => {
+          const valor = getMoodValue(extractEmotionMood(emotion as EmotionResponse & Record<string, unknown>));
           return valor >= 4;
         }).length;
 
-        const negativos = dadosDaApi.filter(e => {
-          const valor = e.nivel > 0 ? e.nivel : (pesosMood[e.mood] || 0);
+        const negativos = allEmotions.filter((emotion) => {
+          const valor = getMoodValue(extractEmotionMood(emotion as EmotionResponse & Record<string, unknown>));
           return valor < 4 && valor > 0;
         }).length;
 
@@ -68,7 +110,9 @@ const InsightsCard = () => {
     };
 
     carregarDados();
-  }, []);
+    const pollId = setInterval(carregarDados, 30000);
+    return () => clearInterval(pollId);
+  }, [refreshTrigger]);
 
   if (loading) {
     return <div className="insights-card">Carregando insights...</div>;
@@ -95,9 +139,12 @@ const InsightsCard = () => {
                 </linearGradient>
               </defs>
               <XAxis 
-                dataKey="day" 
+                dataKey="xKey" 
                 tickLine={false} 
                 axisLine={false} 
+                tickFormatter={(_value: string, index: number) =>
+                  lineChartData[index]?.showDayLabel ? lineChartData[index].day : ""
+                }
                 style={{ fontSize: "0.75rem" }} 
               />
               <YAxis hide domain={[0, 5]} />

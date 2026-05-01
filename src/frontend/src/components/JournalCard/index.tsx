@@ -6,9 +6,10 @@ import { toast } from "react-toastify";
 
 interface JournalCardProps {
   selectedMood: string | null;
+  onSaved?: () => void;
 }
 
-const JournalCard = ({ selectedMood }: JournalCardProps) => {
+const JournalCard = ({ selectedMood, onSaved }: JournalCardProps) => {
   const [text, setText] = useState("");
 
   const handleSave = async () => {
@@ -20,6 +21,7 @@ const JournalCard = ({ selectedMood }: JournalCardProps) => {
         success: "Reflexão salva!",
       });
       setText("");
+      onSaved?.();
     } catch (error: any) {
       toast.error(error.response.data.message);
     }
