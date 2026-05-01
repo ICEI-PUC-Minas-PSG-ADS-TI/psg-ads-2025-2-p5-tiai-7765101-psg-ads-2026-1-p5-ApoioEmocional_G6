@@ -1,10 +1,14 @@
 import "./Navbar.css";
 import { motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
 import { logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
 
-const navItems = ["Inicio"];
+const navItems = [
+  { label: "Inicio", to: "/" },
+  { label: "Chat", to: "/chat" },
+];
 
 interface NavbarProps {
   active?: string;
@@ -28,12 +32,13 @@ const Navbar = ({ active = "Inicio" }: NavbarProps) => {
 
         <div className="navbar-links">
           {navItems.map((item) => (
-            <button
-              key={item}
-              className={`navbar-link${active === item ? " active" : ""}`}
+            <Link
+              key={item.label}
+              to={item.to}
+              className={`navbar-link${active === item.label ? " active" : ""}`}
             >
-              {item}
-            </button>
+              {item.label}
+            </Link>
           ))}
         </div>
 

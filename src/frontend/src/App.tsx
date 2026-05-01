@@ -1,11 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "./contexts/theme-context";
 import AuthLayout from "./pages/AuthLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Home from "./pages/Home";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 import { getToken, getUserIdFromToken, tokenExpired } from "./services/auth";
 import {
@@ -127,30 +128,16 @@ const App = () => {
         pauseOnHover
         theme="colored"
       />
-      {showSessionLoading ? (
-        <div className="app-session-loading" role="status" aria-live="polite">
-          Carregando…
-        </div>
-      ) : !loggedIn ? (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AuthLayout />}>
-              <Route index element={<LoginForm onLogin={() => setLoggedIn(true)} />} />
-              <Route path="register" element={<RegisterForm />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      ) : showHome ? (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      ) : needsOnboarding ? (
-        <Onboarding onComplete={handleOnboardingComplete} />
-      ) : null}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={loggedIn ? <Home /> : <AuthLayout />}>
+            <Route index element={<LoginForm onLogin={() => setLoggedIn(true)} />} />
+            <Route path="register" element={<RegisterForm />} />
+          </Route>
+          <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
