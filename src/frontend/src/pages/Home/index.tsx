@@ -5,7 +5,6 @@ import MoodSelector from "@/components/MoodSelector";
 import JournalCard from "@/components/JournalCard";
 import InsightsCard from "@/components/InsightsCard";
 import CalmNowCard from "@/components/CalmNowCard";
-import { Phone } from "lucide-react";
 import NeedHelp from "@/components/NeedHelp";
 import { getToken } from "@/services/auth";
 
@@ -42,7 +41,6 @@ const Home = () => {
         <CalmNowCard />
 
         <NeedHelp />
-
       </div>
     </main>
   );

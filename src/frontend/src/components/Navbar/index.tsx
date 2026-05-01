@@ -1,21 +1,23 @@
 import "./Navbar.css";
 import { User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { logout } from "../../services/auth";
+import { getToken, logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
-
+import { motion } from "framer-motion";
 const navItems = [
   { label: "Inicio", to: "/" },
-  { label: "Timeline", to: "/timeline" },
+  { label: "Chat", to: "/chat" },
+  { label: "Linha do Tempo", to: "/timeline" },
 ];
 
 const Navbar = () => {
   const location = useLocation();
+  const token = getToken();
 
-  const activeItem =
-    navItems.find((item) =>
-      item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to)
-    )?.label ?? "";
+  if (!token) return null;
+
+  const currentItem = navItems.find((item) => item.to === location.pathname);
+  const active = currentItem?.label ?? "Inicio";
 
   const handleLogout = () => {
     logout();
@@ -23,7 +25,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <motion.nav
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="navbar"
+    >
       <div className="navbar-inner">
         <span className="navbar-logo">EMOTi IA</span>
 
@@ -32,11 +39,11 @@ const Navbar = () => {
             <Link
               key={item.label}
               to={item.to}
-              className={`navbar-link${activeItem === item.label ? " active" : ""}`}
+              className={`navbar-link${active === item.label ? " active" : ""}`}
             >
               {item.label}
             </Link>
-           ))}
+          ))}
         </div>
 
         <div className="navbar-actions">
@@ -49,7 +56,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
