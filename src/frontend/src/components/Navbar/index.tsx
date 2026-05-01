@@ -1,20 +1,24 @@
 import "./Navbar.css";
-import { motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
-import { logout } from "../../services/auth";
+import { Link, useLocation } from "react-router-dom";
+import { getToken, logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
-
+import { motion } from "framer-motion";
 const navItems = [
   { label: "Inicio", to: "/" },
   { label: "Chat", to: "/chat" },
+  { label: "Linha do Tempo", to: "/timeline" },
 ];
 
-interface NavbarProps {
-  active?: string;
-}
+const Navbar = () => {
+  const location = useLocation();
+  const token = getToken();
 
-const Navbar = ({ active = "Inicio" }: NavbarProps) => {
+  if (!token) return null;
+
+  const currentItem = navItems.find((item) => item.to === location.pathname);
+  const active = currentItem?.label ?? "Inicio";
+
   const handleLogout = () => {
     logout();
     window.location.reload();

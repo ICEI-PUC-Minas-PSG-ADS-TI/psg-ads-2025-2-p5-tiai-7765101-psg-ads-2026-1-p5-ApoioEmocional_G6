@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import { Send, Heart, Shield } from "lucide-react";
 import "./Chat.css";
 
@@ -74,8 +73,6 @@ const Chat = () => {
 
   return (
     <div className="page-full" style={{ display: "flex", flexDirection: "column" }}>
-      <Navbar active="Chat" />
-
       <div className="chat-page">
         {/* Side accent */}
         <div className="chat-side-accent">
