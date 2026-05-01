@@ -82,17 +82,26 @@ namespace backend.Services
             });
         }
 
-        public async Task<IEnumerable<EmotionResponse>> GetThisWeekAsync(Guid userId)
+        public async Task<IEnumerable<EmotionDailyGroupResponse>> GetThisWeekAsync(Guid userId)
         {
             var list = await _repository.GetThisWeekAsync(userId);
-            return list.Select(e => new EmotionResponse
-            {
-                Id = e.Id,
-                UserId = e.UserId,
-                Mood = e.Emotion.ToString(),
-                CreatedAt = e.CreatedAt
-                ,Diary = e.Diary
-            });
+            
+            return list
+                .GroupBy(e => e.CreatedAt.Date)
+                .Select(g => new EmotionDailyGroupResponse
+                {
+                    Date = g.Key,
+                    Emotions = g.Select(e => new EmotionResponse
+                    {
+                        Id = e.Id,
+                        UserId = e.UserId,
+                        Mood = e.Emotion.ToString(),
+                        CreatedAt = e.CreatedAt,
+                        Diary = e.Diary
+                    }).ToList()
+                })
+                .OrderBy(g => g.Date)
+                .ToList();
         }
     }
 }
