@@ -7,6 +7,7 @@ import ThemeToggle from "../ThemeToggle";
 const navItems = [
   { label: "Inicio", to: "/" },
   { label: "Timeline", to: "/timeline" },
+  { label: "Chat", to: "/chat" },
 ];
 
 const Navbar = () => {
