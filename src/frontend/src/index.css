@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+html {
+  scrollbar-gutter: stable;
+}
+
 /* ===== Design Tokens ===== */
 :root {
   --background: #f5f7fb;
@@ -120,3 +124,13 @@ textarea {
 }
 
 /* ===== Toaster (sonner) ===== */
+
+.app-session-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--muted-foreground);
+  background: var(--background);
+}

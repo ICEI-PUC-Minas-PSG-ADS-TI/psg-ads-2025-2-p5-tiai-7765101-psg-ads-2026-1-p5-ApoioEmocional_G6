@@ -1,40 +1,43 @@
 import "./Navbar.css";
-import { motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
 
-const navItems = ["Inicio"];
+const navItems = [
+  { label: "Inicio", to: "/" },
+  { label: "Timeline", to: "/timeline" },
+  { label: "Chat", to: "/chat" },
+];
 
-interface NavbarProps {
-  active?: string;
-}
+const Navbar = () => {
+  const location = useLocation();
 
-const Navbar = ({ active = "Inicio" }: NavbarProps) => {
+  const activeItem =
+    navItems.find((item) =>
+      item.to === "/" ? location.pathname === "/" : location.pathname.startsWith(item.to)
+    )?.label ?? "";
+
   const handleLogout = () => {
     logout();
     window.location.reload();
   };
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="navbar"
-    >
+    <nav className="navbar">
       <div className="navbar-inner">
         <span className="navbar-logo">EMOTi IA</span>
 
         <div className="navbar-links">
           {navItems.map((item) => (
-            <button
-              key={item}
-              className={`navbar-link${active === item ? " active" : ""}`}
+            <Link
+              key={item.label}
+              to={item.to}
+              className={`navbar-link${activeItem === item.label ? " active" : ""}`}
             >
-              {item}
-            </button>
-          ))}
+              {item.label}
+            </Link>
+           ))}
         </div>
 
         <div className="navbar-actions">
@@ -47,7 +50,7 @@ const Navbar = ({ active = "Inicio" }: NavbarProps) => {
           </button>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 
