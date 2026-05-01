@@ -13,6 +13,8 @@ namespace backend.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<EmotionLog> Emotions { get; set; }
+        public DbSet<UserOnboarding> UserOnboardings { get; set; }
+        public DbSet<BreathingLog> BreathingLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EmotionLog>()

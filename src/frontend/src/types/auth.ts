@@ -5,6 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
+  nome?: string;
 }
 
 export interface RegisterRequest {
