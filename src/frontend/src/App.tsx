@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "./contexts/theme-context";
 import AuthLayout from "./pages/AuthLayout";
+import AuthenticatedLayout from "./pages/AuthenticatedLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Home from "./pages/Home";
@@ -20,6 +21,7 @@ import type {
   UserOnboardingResponseDto,
 } from "./types/onboarding";
 import "react-toastify/dist/ReactToastify.css";
+import Timeline from "./pages/Timeline";
 import Onboarding from "./components/Onboarding";
 
 const App = () => {
@@ -130,9 +132,20 @@ const App = () => {
       />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={loggedIn ? <Home /> : <AuthLayout />}>
-            <Route index element={<LoginForm onLogin={() => setLoggedIn(true)} />} />
-            <Route path="register" element={<RegisterForm />} />
+          <Route path="/" element={loggedIn ? <AuthenticatedLayout /> : <AuthLayout />}>
+            {loggedIn ? (
+              <>
+                <Route index element={<Home />} />
+                <Route path="timeline" element={<Timeline />} />
+                <Route path="register" element={<Navigate to="/" replace />} />
+              </>
+            ) : (
+              <>
+                <Route index element={<LoginForm onLogin={() => setLoggedIn(true)} />} />
+                <Route path="register" element={<RegisterForm />} />
+                <Route path="timeline" element={<Navigate to="/" replace />} />
+              </>
+            )}
           </Route>
           <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
           <Route path="*" element={<NotFound />} />
