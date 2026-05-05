@@ -1,28 +1,68 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { getAllEmotions } from "@/services/emotion";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Filter } from "lucide-react";
-import { mockEntries, moodCategories, periodFilters, moodCategoryMap } from "@/components/TimelineCard/data";
+import { moodEmojiMap, moodCategories, periodFilters, moodCategoryMap } from "@/components/TimelineCard/data";
 import { groupEntriesByWeek } from "@/components/TimelineCard/insights";
 import TimelineEntryCard from "@/components/TimelineCard/index";
 import "./Timeline.css";
 
 const Timeline = () => {
+  const [entries, setEntries] = useState<any[]>([]); // Estado para os dados reais
+  const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [moodFilter, setMoodFilter] = useState("all");
   const [periodFilter, setPeriodFilter] = useState("all");
 
-  const filteredEntries = mockEntries.filter((entry) => {
-    if (moodFilter !== "all" && moodCategoryMap[entry.mood] !== moodFilter)
-      return false;
-    return true;
-  });
+  // Fetch dos dados reais ao montar o componente
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllEmotions();
+        
+        const formatted = data.map((item: any) => {
+          const pesos: Record<string, number> = { "Otimo": 5, "Bom": 4, "Okay": 3, "Triste": 2, "Estressado": 1 };
+          
+          return {
+            id: item.id,
+            mood: item.mood, 
+            emoji: moodEmojiMap[item.mood] || "😶",
+            intensity: pesos[item.mood] || 3,
+            date: item.createdAt,
+            dayLabel: new Date(item.createdAt).toLocaleDateString("pt-BR", {
+              weekday: "long",
+              day: "2-digit",
+              month: "long",
+            }),
+            preview: item.diary ? item.diary.substring(0, 60) + "..." : "Sem descrição",
+            fullText: item.diary || "Sem descrição adicional",
+          };
+        });
 
+        setEntries(formatted);
+      } catch (error) {
+        console.error("Erro ao carregar timeline:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // FILTRAGEM (Usando os dados que vieram do banco)
+  const filteredEntries = useMemo(() => {
+    return entries.filter((entry) => {
+      if (moodFilter !== "all" && moodCategoryMap[entry.mood] !== moodFilter)
+        return false;
+      return true;
+    });
+  }, [entries, moodFilter]);
+
+  // AGRUPAMENTO
   const weekGroups = groupEntriesByWeek(filteredEntries);
 
-  const allInsights = useMemo(
-    () => weekGroups.flatMap((g) => g.insights),
-    [weekGroups]
-  );
+  if (loading) return <div className="timeline-empty">Carregando sua jornada...</div>;
   return (
     <main className="timeline-container timeline-main-content">
       <motion.div
