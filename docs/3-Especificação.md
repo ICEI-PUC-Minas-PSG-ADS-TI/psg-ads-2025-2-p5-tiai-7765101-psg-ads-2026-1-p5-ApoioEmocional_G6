@@ -23,6 +23,13 @@ Os **Requisitos Funcionais (RF)** descrevem o que o sistema deve fazer.
 | ID    | Descrição do Requisito | Prioridade |
 |-------|------------------------|------------|
 | RF-01 | O sistema deve permitir que os usuários criem uma conta informando nome, e-mail, senha e informações sobre sua rotina (trabalho, estudo, atividade física, relacionamentos). | 🔴 ALTA |
+| RF-02 | O sistema deve permitir o registro diário de emoções (mood) e uma reflexão em texto (diário/diary). | 🔴 ALTA |
+| RF-03 | O sistema deve gerar um dashboard visual com a tendência de humor semanal do usuário através de gráficos de área e barras. | 🔴 ALTA |
+| RF-04 | O sistema deve listar o histórico de registros em uma linha do tempo (Timeline), permitindo a expansão de textos longos. | 🟡 MÉDIA |
+| RF-05 | O sistema deve filtrar o histórico de emoções por categoria (Positivos, Negativos) e períodos de tempo (Mês, Semana). | 🟡 MÉDIA |
+| RF-06 | O sistema deve oferecer um Chat de Apoio Emocional para interação com o usuário. | 🔴 ALTA |
+| RF-07 | O sistema deve oferecer uma sessão de respiração para o usuário. | 🟡 MÉDIA |
+| RF-08 | O sistema deve oferecer ao usuário o encaminhamento para órgãos competentes em saúde mental e emocional. | 🟡 MÉDIA |
 
 ---
 
@@ -30,9 +37,40 @@ Os **Requisitos Funcionais (RF)** descrevem o que o sistema deve fazer.
 
 ## Histórias do Projeto
 
-### História 1 (relacionada ao RF-01)
+### História 1 (Relacionada ao RF-01)
+**Como** usuário,  
+**eu quero** me cadastrar na plataforma informando meus dados e rotina,  
+**para que** eu possa receber um apoio personalizado de acordo com o meu perfil.
 
-Como usuário, eu quero me cadastrar na plataforma para que eu possa receber apoio emocional.
+### História 2 (Relacionada ao RF-02)
+**Como** usuário,  
+**eu quero** registrar como me sinto e escrever sobre o meu dia,  
+**para que** eu possa manter um histórico das minhas reflexões e sentimentos.
+
+### História 3 (Relacionada ao RF-03)
+**Como** usuário,  
+**eu quero** visualizar gráficos com a minha tendência de humor,  
+**para que** eu consiga identificar padrões emocionais ao longo da minha semana.
+
+### História 4 (Relacionada ao RF-04 e RF-05)
+**Como** usuário,  
+**eu quero** ver meus registros antigos em uma linha do tempo e filtrá-los,  
+**para que** eu possa reler momentos específicos e entender minha evolução emocional.
+
+### História 5 (Relacionada ao RF-06)
+**Como** usuário,  
+**eu quero** interagir com um chat de apoio,  
+**para que** eu tenha um espaço imediato para conversar e desabafar em momentos de necessidade.
+
+### História 6 (Relacionada ao RF-07)
+**Como** usuário,  
+**eu quero** realizar sessões guiadas de respiração,  
+**para que** eu consiga reduzir o estresse e a ansiedade de forma prática dentro da plataforma.
+
+### História 7 (Relacionada ao RF-08)
+**Como** usuário em situação de crise,  
+**eu quero** encontrar contatos de órgãos competentes de saúde mental,  
+**para que** eu saiba onde buscar ajuda profissional externa de forma rápida e segura.
 
 ---
 
@@ -52,11 +90,10 @@ Eles garantem a qualidade da solução.
 
 | ID     | Descrição do Requisito | Prioridade |
 |--------|------------------------|------------|
-<<<<<<< HEAD
 | RNF-01 | O sistema deve carregar as páginas em até 3 segundos. | 🟡 MÉDIA |
 | RNF-02 | O sistema deve proteger as informações dos clientes por meio de criptografia. | 🔴 ALTA |
-| RNF-03 | (Descreva aqui o requisito não funcional 3 do seu sistema) | (Alta/Média/Baixa) |
-| RNF-04 | (Descreva aqui o requisito não funcional 4 do seu sistema) | (Alta/Média/Baixa) |
+| RNF-03 | A interface deve ser responsiva, permitindo o uso em dispositivos móveis e desktops sem perda de funcionalidade. | 🔴 ALTA |
+| RNF-04 | O sistema deve suportar o Modo Escuro (Dark Mode) para conforto visual do usuário em diferentes ambientes. | 🟢 BAIXA |
 
 # 3.4 Restrições do Projeto
 📌 **Restrições** são limitações externas impostas ao projeto.
@@ -70,53 +107,31 @@ Elas podem envolver:
 
 ⚠️ Diferente dos RNFs, as restrições impõem **limites fixos** ao projeto.
 
-<<<<<<< HEAD
 ---
 
-=======
->>>>>>> origin/main
 ## Tabela de Restrições
 
 | ID  | Restrição |
 |-----|-----------|
-| R-01 | O projeto deverá ser entregue até o final do semestre. |
-| R-02 | O sistema deve funcionar apenas dentro da rede interna da empresa. |
-| R-03 | O software deve ser compatível com Windows e Linux. |
-| R-04 | (Descreva aqui a restrição 4 do seu projeto) |
-| R-05 | (Descreva aqui a restrição 5 do seu projeto) |
-| R-06 | (Descreva aqui a restrição 6 do seu projeto) |
-| R-07 | (Descreva aqui a restrição 7 do seu projeto) |
-| R-08 | (Descreva aqui a restrição 8 do seu projeto) |
+| R-01 | O projeto deverá ser entregue até o final do semestre 2026-1. |
+| R-02 | O Frontend deve ser desenvolvido obrigatoriamente utilizando React com TypeScript. |
+| R-03 | O Backend deve ser implementado em C# .NET Core com arquitetura Web API. |
+| R-04 | O banco de dados deve ser obrigatoriamente o Microsoft SQL Server. |
+| R-05 | O sistema deve ser acessível via navegadores web modernos (Chrome, Firefox, Edge). |
 
 ---
+
 ## 3.5 Regras de Negócio
 
-> Regras de Negócio definem as condições e políticas que o sistema deve seguir para garantir o correto funcionamento alinhado ao negócio.  
->  
-> Elas indicam **quando** e **como** certas ações devem ocorrer, usando o padrão:  
->  
-> **Se (condição) for verdadeira, então (ação) deve ser tomada.**  
->  
-> Exemplo:  
-> - "Um usuário só poderá finalizar um cadastro se todos os dados forem inseridos e validados com sucesso."  
->  
-> Também pode ser escrito assim (if/then):  
-> - "Se o usuário tem saldo acima de X, então a opção de empréstimo estará liberada."
-
-<<<<<<< HEAD
----
-
-=======
->>>>>>> origin/main
- A tabela abaixo deve ser preenchida com as regras de negócio que **impactam seu projeto**. Os textos no quadro são apenas ilustrativos.
+A tabela abaixo deve ser preenchida com as regras de negócio que **impactam seu projeto**. Os textos no quadro são apenas ilustrativos.
 
 |ID    | Regra de Negócio                                                       |
 |-------|-----------------------------------------------------------------------|
-|RN-01 | Usuário só pode cadastrar até 10 tarefas por dia.                      |
-|RN-02 | Apenas administradores podem alterar permissões de usuários.           |
-|RN-03 | Tarefas vencidas devem ser destacadas em vermelho no sistema.          |
-|RN-04 | *(Descreva aqui a restrição 4 do seu projeto)*                         |
-|RN-05 | *(Descreva aqui a restrição 5 do seu projeto)*                         |
+|RN-01 | Um usuário só pode acessar seus próprios registros de emoções e histórico |
+|RN-02 | O sistema deve impedir o cadastro de humor sem a seleção de um nível/categoria de emoção.  |
+|RN-03 | Para acessar as funcionalidades de Timeline e Dashboard, o usuário deve estar obrigatoriamente autenticado. |
+|RN-04 | O sistema deve destacar visualmente registros com intensidade emocional alta para facilitar a identificação de picos de estresse ou alegria. |
+|RN-05 | Se o usuário tentar acessar uma rota protegida sem estar logado, então ele deve ser redirecionado para a tela de Login. |
 
 💡 **Dica:** Explique sempre o motivo ou impacto da regra no sistema.
 
