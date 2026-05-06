@@ -1,28 +1,12 @@
 # 2. Planejamento do Projeto
 
-Esta seção apresenta como o grupo organizará o trabalho ao longo do semestre.  
-O projeto adota uma metodologia ágil, simulando o ambiente de uma Software House.
-
----
-
-### 🚨 Regra de Ouro:
-
-> ❗Não existe divisão entre “quem faz documento”, “quem faz Front-end” e “quem faz Back-end”.
-
-Todos os integrantes são **Desenvolvedores Full-Stack** e devem implementar **Fatias Verticais (Vertical Slices)**.
-
-✔️ Cada membro deve entregar a funcionalidade completa:  
-**Banco de Dados → API → Tela**
-
----
-
-# 2.1 Sprints do Projeto
+## 2.1 Sprints do Projeto
 
 O projeto será realizado em **4 Sprints**, com entregas contínuas de código e documentação.
 
 ---
 
-## 📅 Visão Geral
+### 📅 Visão Geral
 
 ### 🟢 Sprint 1 – Setup, Hello World e Visão do Produto
 
@@ -41,8 +25,6 @@ O projeto será realizado em **4 Sprints**, com entregas contínuas de código e
 - Script do Banco de Dados
 - 1ª funcionalidade completa funcionando
 - Dados sendo salvos no banco
-
-⚠️ Se não salvar no banco, não pontua.
 
 ---
 
@@ -65,10 +47,7 @@ O projeto será realizado em **4 Sprints**, com entregas contínuas de código e
 
 ---
 
-# 👥 Papéis de Gestão
-
-Todos programam.  
-Os papéis abaixo são apenas para organização do time.
+## 👥 Papéis de Gestão
 
 - 👨‍💻 **Tech Lead (Git Master)**  
 Responsável pelo repositório e merges.
@@ -81,49 +60,22 @@ Responsável por prazos, Kanban e priorização do backlog.
 
 ---
 
-## Definição dos Papéis – Sprint 1
+### Definição dos Papéis – Sprint 1
 
 - 👨‍💻 Tech Lead: Pedro Dias
 - 🗄️ Arquiteto de Dados: Lucas Dias
 - 🧪 Gerente de Qualidade: Arthur Coelho
 - 📋 Facilitador Ágil: Melissa Baia
 
-> Caso os r neste documento.papéis mudem nas próximas Sprints, atualiza
-
 ---
 
-# 2.2 Execução e Controle
+## 2.2 Execução e Controle
 
-## 🗂️ Kanban (OBRIGATÓRIO)
+### 🗂️ Kanban (Projects)
 
-O projeto pode utilizar a aba **Projects** do GitHub, porém é **OBRIGATÓRIO preencher os quadros Kanban de cada Sprint** (apresentados abaixo).
+## 📋 Acompanhamento das Sprints
 
-### Estrutura obrigatória do Board:
-
-- A Fazer
-- Desenvolver
-- Fila para Teste
-- Teste
-- Feito
-
-### Regras
-
-- Cada cartão deve representar uma Fatia Vertical.
-- Todo cartão deve conter:
-  - Responsável
-  - Descrição
-  - Prazo
-- A avaliação individual considerará:
-  - Histórico de commits
-  - Movimentação no Kanban
-
-⚠️ Se não está no Git, não foi feito.
-
----
-
-# 📋 Acompanhamento das Sprints
-
-## Legenda de Status
+### Legenda de Status
 
 - ✔️ Concluído
 - 📝 Em andamento
@@ -150,10 +102,10 @@ O projeto pode utilizar a aba **Projects** do GitHub, porém é **OBRIGATÓRIO p
 
 | Responsável   | Papel                | Tarefa                                                                            | Início | Prazo | Status |
 | ------------- | -------------------- | --------------------------------------------------------------------------------- | ------ | ----- | ------ |
-| Lucas Dias    | Arquiteto de Dados   | Gerar Script do Banco de Dados (entidades: usuário, registro de humor, desabafos) | 21/03  | 24/03 | ❌      |
-| Pedro Dias    | Tech Lead            | Desenvolver Fatia 1: registro de humor + desabafo (BD + API + Tela)               | 22/03  | 30/03 | ❌      |
-| Melissa Baia  | Facilitador Ágil     | Documentar Requisitos do MVP                                                      | 25/03  | 02/04 | ❌      |
-| Arthur Coelho | Gerente de Qualidade | Revisão técnica e Merge                                                           | 02/04  | 05/04 | ❌      |
+| Lucas Dias    | Arquiteto de Dados   | Gerar Script do Banco de Dados (entidades: usuário, registro de humor, desabafos) | 21/03  | 24/03 | ✔️      |
+| Pedro Dias    | Tech Lead            | Desenvolver Fatia 1: registro de humor + desabafo (BD + API + Tela)               | 22/03  | 30/03 | ✔️      |
+| Melissa Baia  | Facilitador Ágil     | Documentar Requisitos do MVP                                                      | 25/03  | 02/04 | ✔️      |
+| Arthur Coelho | Gerente de Qualidade | Revisão técnica e Merge                                                           | 02/04  | 05/04 | ✔️      |
 
 
 ---
@@ -163,10 +115,14 @@ O projeto pode utilizar a aba **Projects** do GitHub, porém é **OBRIGATÓRIO p
 
 | Responsável   | Papel                | Tarefa                                                                                         | Início | Prazo | Status |
 | ------------- | -------------------- | ---------------------------------------------------------------------------------------------- | ------ | ----- | ------ |
-| Arthur Coelho | Gerente de Qualidade | Implementar análise de sentimento (IA) e detecção de palavras de risco                         | 06/04  | 15/04 | ❌      |
-| Pedro Dias    | Tech Lead            | Implementar dashboard com gráficos semanais/mensais e exibição de contatos de ajuda (ex.: CVV) | 06/04  | 15/04 | ❌      |
-| Lucas Dias    | Arquiteto de Dados   | Atualizar DER via Engenharia Reversa                                                           | 16/04  | 20/04 | ❌      |
-| Melissa Baia  | Facilitador Ágil     | Atualizar Diagrama de Classes                                                                  | 16/04  | 23/04 | ❌      |
+| Arthur Coelho | Gerente de Qualidade | Inspecionar as funcionalidades e corrigir bugs                        | 06/04  | 15/04 | ✔️      |
+| Pedro Dias    | Tech Lead            | Correção da lógica de ordenação do gráfico de insights | 06/04  | 15/04 | ✔️      |
+| Lucas Dias    | Arquiteto de Dados   | Atualizar diagramas via Engenharia Reversa                                                           | 16/04  | 20/04 | ✔️      |
+| Melissa Baia  | Facilitador Ágil     | Preencher documentação (Requisitos, histórias, etc)                                                                   | 16/04  | 23/04 | ✔️      |
+| Arthur Coelho | Desenvolvedor | Implementar feature da Sessão de Respiração                         | 06/04  | 15/04 | ✔️      |
+| Pedro Dias    | Desenvolvedor | Implementar chat IA com o usuário - desenvolver a tela | 06/04  | 15/04 | ✔️      |
+| Lucas Dias    | Desenvolvedor | Registro de Emoções e Diário (Backend e Frontend)                                                           | 16/04  | 20/04 | ✔️      |
+| Melissa Baia  | Desenvolvedor | Funcionalidade de Insights Emocionais (Dashboard) + Exibição na linha do tempo                                                          | 16/04  | 23/04 | ✔️      |
 
 
 ---
