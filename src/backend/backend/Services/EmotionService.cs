@@ -85,7 +85,7 @@ namespace backend.Services
         public async Task<IEnumerable<EmotionDailyGroupResponse>> GetThisWeekAsync(Guid userId)
         {
             var list = await _repository.GetThisWeekAsync(userId);
-            
+
             return list
                 .GroupBy(e => e.CreatedAt.Date)
                 .Select(g => new EmotionDailyGroupResponse
@@ -98,10 +98,11 @@ namespace backend.Services
                         Mood = e.Emotion.ToString(),
                         CreatedAt = e.CreatedAt,
                         Diary = e.Diary
-                    }).ToList()
+                    })
+                    .OrderBy(e => e.CreatedAt)
+                    .ToList()
                 })
-                .OrderBy(g => g.Date)
-                .ToList();
+                .OrderBy(d => d.Date);
         }
     }
 }
