@@ -132,10 +132,3 @@ A tabela abaixo deve ser preenchida com as regras de negócio que **impactam seu
 |RN-03 | Para acessar as funcionalidades de Timeline e Dashboard, o usuário deve estar obrigatoriamente autenticado. |
 |RN-04 | O sistema deve destacar visualmente registros com intensidade emocional alta para facilitar a identificação de picos de estresse ou alegria. |
 |RN-05 | Se o usuário tentar acessar uma rota protegida sem estar logado, então ele deve ser redirecionado para a tela de Login. |
-
-💡 **Dica:** Explique sempre o motivo ou impacto da regra no sistema.
-
----
-> **Links Úteis**:
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
