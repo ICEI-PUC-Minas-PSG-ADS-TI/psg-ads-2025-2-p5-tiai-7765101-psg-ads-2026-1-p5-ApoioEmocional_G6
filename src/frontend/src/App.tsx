@@ -20,18 +20,17 @@ const App = () => {
     const checkToken = async () => {
       if (await tokenExpired()) {
         setLoggedIn(false);
-        localStorage.removeItem('userToken');
-      }
-      else {
+        localStorage.removeItem("userToken");
+      } else {
         setLoggedIn(true);
       }
     };
-    checkToken();
+    void checkToken();
   }, []);
 
   return (
     <ThemeProvider>
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={4000}
         hideProgressBar={false}
@@ -48,8 +47,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={loggedIn ? <Home /> : <AuthLayout />}>
             <Route index element={<LoginForm onLogin={() => setLoggedIn(true)} />} />
-            <Route path="register" element={<RegisterForm />} />
+            <Route path="register" element={<RegisterForm onLogin={() => setLoggedIn(true)} />}
+            />
           </Route>
+          <Route path="/home" element={loggedIn ? <Home /> : <Navigate to="/" replace />} />
           <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
           <Route path="/timeline" element={loggedIn ? <Timeline /> : <Navigate to="/" replace />} />
           <Route path="*" element={<NotFound />} />

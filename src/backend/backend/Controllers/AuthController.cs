@@ -19,11 +19,13 @@ namespace backend.Controllers
     {
         private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
+        private readonly IUserOnboardingService _onboardingService;
 
-        public AuthController(AppDbContext context, TokenService tokenService)
+        public AuthController(AppDbContext context, TokenService tokenService, IUserOnboardingService userOnboardingService)
         {
             _context = context;
             _tokenService = tokenService;
+            _onboardingService = userOnboardingService;
         }
 
         [HttpPost("register")]
@@ -41,8 +43,9 @@ namespace backend.Controllers
 
             _context.Users.Add(usuario);
             await _context.SaveChangesAsync();
+            var token = _tokenService.GenerateToken(usuario);
 
-            return Ok("Usuário criado com sucesso");
+            return Ok(new { token, usuario.Nome});
         }
 
         [HttpPost("login")]
@@ -59,8 +62,9 @@ namespace backend.Controllers
                 return Unauthorized("Email ou senha inválidos");
 
             var token = _tokenService.GenerateToken(usuario);
+            var completedOnboarding = GetCompletedOnboarding(usuario.Id);
 
-            return Ok(new { token, usuario.Nome });
+            return Ok(new { token, usuario.Nome, completedOnboarding.IsCompleted});
         }
 
         private string HashSenha(string senha)
@@ -116,5 +120,15 @@ namespace backend.Controllers
 
             return token;
         }
-    }
+
+        private async Task<bool> GetCompletedOnboarding(Guid userId)
+        {
+            var onboarding = await _onboardingService.GetByUserIdAsync(userId);
+
+            if (onboarding != null && onboarding.Completed)
+                return true;
+
+            return false;
+        }
+    }    
 }

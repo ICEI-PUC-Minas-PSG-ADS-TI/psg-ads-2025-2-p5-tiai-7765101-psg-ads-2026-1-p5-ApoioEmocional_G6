@@ -4,8 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
 import { register } from "@/services/auth";
+import { toast } from "react-toastify";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  onLogin: () => void;
+}
+
+const RegisterForm = ({ onLogin }: RegisterFormProps) => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -16,16 +21,19 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      await register({
+      await toast.promise(register({
         nome: firstName,
         sobrenome: lastName,
         email,
         senha: password,
+      }), {
+        pending: "Registrando usuário...",
+        success: "Usuário registrado com sucesso",
       });
-
-      navigate("/");
+      onLogin();
+      navigate("/home");
     } catch (error) {
-      console.error("Erro ao registrar:", error);
+      toast.error(error.response.data.message ?? "Erro ao registrar usuário");
     }
   };
 

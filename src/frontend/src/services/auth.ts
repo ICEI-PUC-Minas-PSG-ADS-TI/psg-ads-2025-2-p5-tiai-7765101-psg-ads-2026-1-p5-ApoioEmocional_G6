@@ -1,5 +1,5 @@
 import { api } from "./api";
-import type { LoginRequest, LoginResponse, RegisterRequest } from "@/types/auth";
+import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "@/types/auth";
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post("/Auth/login", data);
@@ -8,8 +8,11 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   return response.data;
 };
 
-export const register = async (data: RegisterRequest): Promise<void> => {
-  await api.post("/Auth/register", data);
+export const register = async (data: RegisterRequest): Promise<RegisterResponse> => {
+  const response = await api.post("/Auth/register", data);
+  const { token, nome } = response.data;
+  localStorage.setItem("userToken", JSON.stringify({ token, nome }));
+  return response.data;
 };
 
 export const tokenExpired = async (): Promise<boolean> => {
@@ -39,7 +42,8 @@ export const tokenExpired = async (): Promise<boolean> => {
       return true;
     }
 
-    throw err;
+    // Rede, HTTPS/certificado, CORS, 5xx, etc.: não apagar o token nem bloquear a rota inicial
+    return false;
   }
 };
 
