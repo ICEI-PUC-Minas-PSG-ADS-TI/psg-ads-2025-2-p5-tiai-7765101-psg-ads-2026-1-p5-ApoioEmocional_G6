@@ -5,6 +5,8 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
+  nome: string;
+  onboardingCompleted?: boolean;
 }
 
 export interface RegisterRequest {
@@ -12,4 +14,9 @@ export interface RegisterRequest {
   sobrenome: string;
   email: string;
   senha: string;
+}
+
+export interface RegisterResponse {
+  token: string;
+  nome: string;
 }

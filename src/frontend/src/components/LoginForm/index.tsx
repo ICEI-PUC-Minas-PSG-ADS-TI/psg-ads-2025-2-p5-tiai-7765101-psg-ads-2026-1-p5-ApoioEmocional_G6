@@ -1,6 +1,6 @@
 import "./LoginForm.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Input from "@/components/Input";
 import { login } from "@/services/auth";
@@ -11,6 +11,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,11 +19,17 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     e.preventDefault();
 
     try {
-      await toast.promise(login({ email, senha: password }), {
+      const response = await toast.promise(login({ email, senha: password }), {
         pending: "Fazendo login...",
         success: "Login realizado com sucesso",
       });
       onLogin();
+      console.log(response.onboardingCompleted);
+      if(response.onboardingCompleted) {
+        navigate("/home");
+      } else {
+        navigate("/onboarding");
+      }
     } catch (error: any) {
       toast.error(error.response.data.message ?? "Erro ao fazer login");
     }

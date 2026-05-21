@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260429171039_AddTableUserOnboarding")]
+    partial class AddTableUserOnboarding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,28 +24,6 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("backend.Entities.BreathingLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BreathingLogs");
-                });
 
             modelBuilder.Entity("backend.Entities.EmotionLog", b =>
                 {
@@ -142,7 +123,6 @@ namespace backend.Migrations
 
                     b.Navigation("User");
                 });
-#pragma warning restore 612, 618
 #pragma warning restore 612, 618
         }
     }

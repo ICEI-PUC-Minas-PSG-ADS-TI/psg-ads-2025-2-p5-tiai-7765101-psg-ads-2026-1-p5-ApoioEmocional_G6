@@ -5,7 +5,7 @@ import { getToken, logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
 import { motion } from "framer-motion";
 const navItems = [
-  { label: "Inicio", to: "/" },
+  { label: "Inicio", to: "/home" },
   { label: "Chat", to: "/chat" },
   { label: "Linha do Tempo", to: "/timeline" },
 ];
