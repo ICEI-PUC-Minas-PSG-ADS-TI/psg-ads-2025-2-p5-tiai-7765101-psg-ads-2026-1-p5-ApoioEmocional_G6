@@ -6,7 +6,6 @@ import AuthLayout from "./pages/AuthLayout";
 import AuthenticatedLayout from "./pages/AuthenticatedLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
@@ -48,26 +47,6 @@ const App = () => {
     setRedirectAfterLogin("/home");
   };
 
-  const handleOnboardingComplete = async (responses: OnboardingResponses) => {
-    const token = getToken();
-    const userId = getUserIdFromToken(token);
-
-    if (!userId) {
-      throw new Error("Não foi possível identificar o usuário autenticado.");
-    }
-
-    const payload = mapOnboardingResponsesToRequest(responses, userId, true);
-    const existing = await getUserOnboarding(userId);
-
-    if (existing) {
-      await updateUserOnboarding(userId, payload);
-    } else {
-      await createUserOnboarding(payload);
-    }
-
-    toast.success("Onboarding concluído com sucesso!");
-    setRedirectAfterLogin("/home");
-  };
 
   return (
     <ThemeProvider>
@@ -91,7 +70,7 @@ const App = () => {
             />
           </Route>
           <Route element={<AuthenticatedLayout/>}>
-            <Route path="/onboarding" element={loggedIn ? (<Onboarding onComplete={handleOnboardingComplete} />) : (<Navigate to="/" replace />)}/>
+            <Route path="/onboarding" element={loggedIn ? (<Onboarding/>) : (<Navigate to="/" replace />)}/>
             <Route path="/home" element={loggedIn ? <Home /> : <Navigate to="/" replace />} />
             <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
             <Route path="/timeline" element={loggedIn ? <Timeline /> : <Navigate to="/" replace />} />

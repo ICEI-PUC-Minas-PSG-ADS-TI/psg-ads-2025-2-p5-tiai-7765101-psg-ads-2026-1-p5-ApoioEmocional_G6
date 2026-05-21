@@ -5,12 +5,12 @@ import { Heart, ArrowRight, ArrowLeft, Sparkles, Check } from "lucide-react";
 import type { OnboardingResponses } from "@/types/onboarding";
 import "./Onboarding.css";
 import { useNavigate } from "react-router-dom";
+import { getToken, getUserIdFromToken } from "@/services/auth";
+import { mapOnboardingResponsesToRequest } from "@/utils/mapOnboardingResponses";
+import { getUserOnboarding, updateUserOnboarding, createUserOnboarding } from "@/services/onboarding";
+import { toast } from "react-toastify";
 
 export type { OnboardingResponses };
-
-interface OnboardingProps {
-  onComplete: (responses: OnboardingResponses) => Promise<void>;
-}
 
 const TOTAL_STEPS = 6;
 
@@ -20,7 +20,7 @@ const stepVariants = {
   exit: { opacity: 0, x: -60 },
 };
 
-const Onboarding = ({ onComplete }: OnboardingProps) => {
+const Onboarding = () => {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState<OnboardingResponses>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,25 +35,8 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
     }
     setIsSubmitting(true);
     setSubmitError(null);
-    try {
-      await onComplete(responses);
-      navigate("/home", { replace: true });
-    } catch (e: unknown) {
-      let message: string | undefined;
-      if (axios.isAxiosError(e)) {
-        const data = e.response?.data;
-        if (typeof data === "string") message = data;
-        else if (data && typeof data === "object" && "message" in data) {
-          const m = (data as { message?: unknown }).message;
-          if (typeof m === "string") message = m;
-        }
-      } else if (e instanceof Error) {
-        message = e.message;
-      }
-      setSubmitError(message ?? "Não foi possível salvar. Tente novamente.");
-    } finally {
-      setIsSubmitting(false);
-    }
+
+    await salvarOnboarding(responses);
   };
 
   const back = () => {
@@ -242,6 +225,28 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
   };
 
   const isLastStep = step === TOTAL_STEPS - 1;
+
+  const salvarOnboarding = async (responses: OnboardingResponses) => {
+    const token = getToken();
+    const userId = getUserIdFromToken(token);
+
+    if (!userId) {
+      throw new Error("Não foi possível identificar o usuário autenticado.");
+    }
+
+    const payload = mapOnboardingResponsesToRequest(responses, userId, true);
+    try {
+      const response = await createUserOnboarding(payload);
+      if (response) {
+        toast.success("Onboarding concluído com sucesso!");
+        navigate("/home", { replace: true });
+      } else {
+        throw new Error("Não foi possível concluir o onboarding. Tente novamente.");
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Não foi possível concluir o onboarding. Tente novamente.");
+    }
+  };
 
   return (
     <div className="onboarding-overlay">

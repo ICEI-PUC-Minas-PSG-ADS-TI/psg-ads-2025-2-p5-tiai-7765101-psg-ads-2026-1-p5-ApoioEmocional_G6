@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import { User, LogOut } from "lucide-react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getToken, logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
 import { motion } from "framer-motion";
@@ -25,41 +25,38 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <motion.nav
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="navbar"
-      >
-        <div className="navbar-inner">
-          <span className="navbar-logo">EMOTi IA</span>
+    <motion.nav
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="navbar"
+    >
+      <div className="navbar-inner">
+        <span className="navbar-logo">EMOTi IA</span>
 
-          <div className="navbar-links">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className={`navbar-link${active === item.label ? " active" : ""}`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="navbar-actions">
-            <ThemeToggle />
-            <div className="navbar-avatar">
-              <User size={16} />
-            </div>
-            <button onClick={handleLogout} className="logout-button" aria-label="Sair" title="Sair">
-              <LogOut size={16} />
-            </button>
-          </div>
+        <div className="navbar-links">
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className={`navbar-link${active === item.label ? " active" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-      </motion.nav>
-      <Outlet />
-    </>
+
+        <div className="navbar-actions">
+          <ThemeToggle />
+          <div className="navbar-avatar">
+            <User size={16} />
+          </div>
+          <button onClick={handleLogout} className="logout-button" aria-label="Sair" title="Sair">
+            <LogOut size={16} />
+          </button>
+        </div>
+      </div>
+    </motion.nav>
   );
 };
 

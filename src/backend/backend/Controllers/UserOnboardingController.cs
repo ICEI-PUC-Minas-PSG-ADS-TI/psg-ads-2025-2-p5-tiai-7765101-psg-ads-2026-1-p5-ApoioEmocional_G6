@@ -12,10 +12,12 @@ namespace backend.Controllers
     public class UserOnboardingController : ControllerBase
     {
         private readonly IUserOnboardingService _service;
+        private readonly IEmotionService _emotionService;
 
-        public UserOnboardingController(IUserOnboardingService service)
+        public UserOnboardingController(IUserOnboardingService service, IEmotionService emotionService)
         {
             _service = service;
+            _emotionService = emotionService;
         }
 
         [HttpPost]
@@ -28,7 +30,6 @@ namespace backend.Controllers
 
             try 
             {
-                // Mapeamento: RequestDto -> Entidade
                 var onboarding = new UserOnboarding
                 {
                     UserId = request.UserId,
@@ -41,8 +42,8 @@ namespace backend.Controllers
                 };
 
                 var createdOnboarding = await _service.CreateAsync(onboarding);
+                _emotionService.RegisterEmotionAsync(new EmotionRequest { Diary = "Registro Onboarding", Mood =  onboarding.InitialStatus.ToString()}, onboarding.UserId);
                 
-                // Mapeamento: Entidade -> ResponseDto
                 var response = MapToResponse(createdOnboarding);
 
                 return CreatedAtAction(nameof(GetByUserId), new { userId = response.UserId }, response);
