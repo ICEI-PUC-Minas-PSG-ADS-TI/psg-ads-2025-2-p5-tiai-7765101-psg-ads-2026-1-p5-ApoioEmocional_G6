@@ -17,7 +17,8 @@ const Navbar = () => {
   if (!token) return null;
 
   const currentItem = navItems.find((item) => item.to === location.pathname);
-  const active = currentItem?.label ?? "Inicio";
+  const active = currentItem?.label ?? "";
+  const isProfileActive = location.pathname === "/profile";
 
   const handleLogout = () => {
     logout();
@@ -48,9 +49,13 @@ const Navbar = () => {
 
         <div className="navbar-actions">
           <ThemeToggle />
-          <div className="navbar-avatar">
+          <Link
+            to="/profile"
+            className={`navbar-avatar${isProfileActive ? " active" : ""}`}
+            aria-label="Meu perfil"
+          >
             <User size={16} />
-          </div>
+          </Link>
           <button onClick={handleLogout} className="logout-button" aria-label="Sair" title="Sair">
             <LogOut size={16} />
           </button>

@@ -83,6 +83,11 @@
   color: var(--primary-foreground);
 }
 
+.navbar-avatar.active {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .logout-button {
   display: inline-flex;
   align-items: center;

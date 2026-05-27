@@ -13,6 +13,7 @@ import { getToken, getUserIdFromToken, tokenExpired } from "./services/auth";
 import "react-toastify/dist/ReactToastify.css";
 import Timeline from "./pages/Timeline";
 import Onboarding from "./pages/Onboarding";
+import Profile from "./pages/Profile";
 import { toast } from "react-toastify";
 import type { OnboardingResponses } from "./types/onboarding";
 import {
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="/home" element={loggedIn ? <Home /> : <Navigate to="/" replace />} />
             <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
             <Route path="/timeline" element={loggedIn ? <Timeline /> : <Navigate to="/" replace />} />
+            <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to="/" replace />} />
             <Route
               path="/redirect-after-login"
               element={loggedIn ? <Navigate to={redirectAfterLogin} replace /> : <Navigate to="/" replace />}
