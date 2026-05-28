@@ -40,9 +40,9 @@ const Home = () => {
 
       <section className="home-insights-section" aria-label="Insights emocionais">
         <div className="home-insights-divider">
-          <span className="home-insights-divider-line" />
+          <span className="home-insights-divider-line" aria-hidden="true" />
           <span className="home-insights-divider-label">Seu panorama emocional</span>
-          <span className="home-insights-divider-line" />
+          <span className="home-insights-divider-line" aria-hidden="true" />
         </div>
         <InsightsCard refreshTrigger={insightsRefreshTrigger} />
       </section>

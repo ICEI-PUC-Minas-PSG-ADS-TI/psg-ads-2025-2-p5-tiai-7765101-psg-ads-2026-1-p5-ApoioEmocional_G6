@@ -1,18 +1,22 @@
 .app-layout {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
-  overflow: hidden;
+  min-height: 100dvh;
 }
 
 .app-layout__content {
   flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+}
+
+/* Layout fixo só no chat */
+.app-layout:has(.chat-root) {
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .app-layout__content:has(.chat-root) {
+  min-height: 0;
   overflow: hidden;
 }

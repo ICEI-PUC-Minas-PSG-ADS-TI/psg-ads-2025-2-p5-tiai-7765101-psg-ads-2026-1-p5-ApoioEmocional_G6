@@ -62,7 +62,14 @@ const Timeline = () => {
   // AGRUPAMENTO
   const weekGroups = groupEntriesByWeek(filteredEntries);
 
-  if (loading) return <div className="timeline-empty">Carregando sua jornada...</div>;
+  if (loading) {
+    return (
+      <main className="timeline-container timeline-main-content">
+        <div className="timeline-empty">Carregando sua jornada...</div>
+      </main>
+    );
+  }
+
   return (
     <main className="timeline-container timeline-main-content">
       <motion.div

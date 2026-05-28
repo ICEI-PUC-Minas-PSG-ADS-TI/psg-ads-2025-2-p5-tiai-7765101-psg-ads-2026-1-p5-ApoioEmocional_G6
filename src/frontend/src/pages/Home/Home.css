@@ -1,4 +1,14 @@
 /* ===== Home Page ===== */
+html:has(.home-container) {
+  scrollbar-gutter: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html:has(.home-container)::-webkit-scrollbar {
+  display: none;
+}
+
 .page-full {
   min-height: 100vh;
 }
@@ -32,13 +42,12 @@
   flex-direction: column;
   gap: 1.25rem;
   margin-top: 0.5rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(74, 144, 226, 0.08);
 }
 
 .home-insights-divider {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -62,6 +71,7 @@
   text-transform: uppercase;
   color: var(--muted-foreground);
   white-space: nowrap;
+  text-align: center;
 }
 
 .home-heading-page {
