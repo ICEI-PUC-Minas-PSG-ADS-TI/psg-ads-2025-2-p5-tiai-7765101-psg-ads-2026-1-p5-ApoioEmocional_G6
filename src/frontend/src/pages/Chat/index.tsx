@@ -72,7 +72,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="page-full" style={{ display: "flex", flexDirection: "column" }}>
+    <div className="chat-root">
       <div className="chat-page">
         {/* Side accent */}
         <div className="chat-side-accent">
@@ -146,50 +146,52 @@ const Chat = () => {
             </div>
           </div>
 
-          {/* Quick actions */}
-          <div className="chat-quick-actions">
-            {quickActions.map((action) => (
-              <motion.button
-                key={action.label}
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => sendMessage(action.label)}
-                className="chat-quick-btn"
-              >
-                <span>{action.emoji}</span>
-                <span>{action.label}</span>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Input */}
-          <form onSubmit={handleSubmit} className="chat-input-area">
-            <div className="chat-input-wrap">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Compartilhe o que esta passando na sua mente..."
-                className="chat-input"
-              />
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="chat-send-btn"
-                disabled={!input.trim()}
-              >
-                <Send size={18} />
-              </motion.button>
+          <div className="chat-footer">
+            {/* Quick actions */}
+            <div className="chat-quick-actions">
+              {quickActions.map((action) => (
+                <motion.button
+                  key={action.label}
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => sendMessage(action.label)}
+                  className="chat-quick-btn"
+                >
+                  <span>{action.emoji}</span>
+                  <span>{action.label}</span>
+                </motion.button>
+              ))}
             </div>
 
-            {/* Disclaimer */}
-            <p className="chat-disclaimer">
-              <Shield size={12} />
-              Este chat oferece apoio emocional e nao substitui acompanhamento psicologico profissional.
-            </p>
-          </form>
+            {/* Input */}
+            <form onSubmit={handleSubmit} className="chat-input-area">
+              <div className="chat-input-wrap">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Compartilhe o que esta passando na sua mente..."
+                  className="chat-input"
+                />
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="chat-send-btn"
+                  disabled={!input.trim()}
+                >
+                  <Send size={18} />
+                </motion.button>
+              </div>
+
+              {/* Disclaimer */}
+              <p className="chat-disclaimer">
+                <Shield size={12} />
+                Este chat oferece apoio emocional e nao substitui acompanhamento psicologico profissional.
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </div>
