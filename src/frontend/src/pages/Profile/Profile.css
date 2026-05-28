@@ -71,11 +71,30 @@
   box-shadow: var(--shadow-card);
 }
 
+/* Dashboard: calendar + stats side by side */
+.profile-dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (min-width: 769px) {
+  .profile-dashboard {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  }
+}
+
 /* Calendar */
 .emotional-calendar {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.875rem;
+  padding: 1rem 1.15rem;
+}
+
+.calendar-head h2 {
+  font-size: 1rem;
 }
 
 .calendar-head {
@@ -83,7 +102,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .calendar-month-nav {
@@ -122,7 +141,7 @@
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .calendar-weekday {
@@ -136,12 +155,12 @@
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .calendar-cell {
   aspect-ratio: 1;
-  border-radius: 18px;
+  border-radius: 13px;
   background: var(--muted);
   display: flex;
   flex-direction: column;
@@ -179,12 +198,12 @@
 }
 
 .calendar-emoji {
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1.5rem;
+  height: 1.25rem;
 }
 
 .calendar-cell:not(.has-entry) .calendar-emoji {
@@ -193,7 +212,7 @@
 }
 
 .calendar-daynum {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--muted-foreground);
 }
@@ -209,9 +228,8 @@
 /* Stats grid */
 .profile-stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  margin-top: 1.5rem;
 }
 
 .stat-card {
@@ -430,15 +448,11 @@
 }
 
 @media (max-width: 768px) {
-  .profile-stats-grid {
-    grid-template-columns: 1fr;
-  }
-
   .calendar-cell {
-    border-radius: 14px;
+    border-radius: 12px;
   }
 
   .calendar-emoji {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
