@@ -191,6 +191,7 @@ const Profile = () => {
           </div>
         </motion.div>
 
+        <div className="profile-dashboard">
         <motion.section
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -260,7 +261,7 @@ const Profile = () => {
                   disabled={isFuture}
                 >
                   <span className="calendar-emoji">
-                    {entry ? entry.emoji : isFuture ? "" : <Plus size={16} strokeWidth={2.4} />}
+                    {entry ? entry.emoji : isFuture ? "" : <Plus size={14} strokeWidth={2.4} />}
                   </span>
                   <span className="calendar-daynum">{cell.date.getDate()}</span>
                 </motion.button>
@@ -342,6 +343,7 @@ const Profile = () => {
               </div>
             </div>
           </motion.div>
+        </div>
         </div>
       </main>
 
