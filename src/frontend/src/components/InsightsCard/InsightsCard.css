@@ -2,8 +2,10 @@
 .insights-card {
   background: var(--card);
   border-radius: 1rem;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 2px 16px -4px rgba(74, 144, 226, 0.06);
   padding: 1.5rem;
+  border: 1px solid var(--border);
+  opacity: 0.97;
 }
 
 .insights-heading {

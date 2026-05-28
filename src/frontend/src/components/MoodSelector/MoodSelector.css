@@ -1,51 +1,353 @@
-/* ===== Mood Selector ===== */
-.mood-selector-card {
+/* ===== Emotional Check-in (unified mood + journal) ===== */
+.emotional-check-in {
+  position: relative;
+  width: 100%;
+  min-height: 18rem;
   background: var(--card);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: var(--shadow-card);
-  padding: 1.5rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid rgba(74, 144, 226, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, min-height 0.35s ease;
 }
 
-.mood-selector-heading {
-  font-size: 1.125rem;
+.emotional-check-in--reflection {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(74, 144, 226, 0.18);
+  min-height: 22rem;
+}
+
+.emotional-check-in--success {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(74, 144, 226, 0.22);
+  min-height: 20rem;
+}
+
+.emotional-check-in-glow {
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.emotional-check-in--reflection .emotional-check-in-glow {
+  left: -15%;
+  right: auto;
+  background: radial-gradient(circle, rgba(123, 110, 246, 0.1) 0%, transparent 70%);
+}
+
+.emotional-check-in--success .emotional-check-in-glow {
+  top: auto;
+  bottom: -30%;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.18) 0%, transparent 70%);
+}
+
+.emotional-check-in-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.emotional-check-in-step--reflection {
+  gap: 1.25rem;
+}
+
+.emotional-check-in-header {
+  position: relative;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.emotional-check-in-header--reflection {
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.emotional-check-in-eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(74, 144, 226, 0.1);
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  margin-bottom: 0.625rem;
+}
+
+.emotional-check-in-heading {
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--foreground);
-  margin-bottom: 1rem;
+  line-height: 1.35;
+  margin: 0;
 }
 
+.emotional-check-in-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+/* ===== Mood buttons ===== */
 .mood-buttons {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
+  width: 100%;
 }
 
 .mood-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
+  gap: 0.375rem;
+  padding: 1rem 1.125rem;
+  flex: 1 1 calc(33.333% - 0.75rem);
+  min-width: 5.5rem;
+  max-width: 8rem;
+  border-radius: 1rem;
+  border: 1.5px solid var(--border);
   background: var(--card);
-  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
 }
 
 .mood-btn:hover {
-  border-color: rgba(74, 144, 226, 0.4);
-}
-
-.mood-btn.selected {
-  border-color: var(--primary);
-  background: var(--muted);
+  border-color: rgba(74, 144, 226, 0.45);
+  background: rgba(74, 144, 226, 0.04);
+  box-shadow: 0 6px 20px -6px rgba(74, 144, 226, 0.2);
 }
 
 .mood-emoji {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  line-height: 1;
 }
 
 .mood-label {
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.8125rem;
+  font-weight: 600;
   color: var(--muted-foreground);
+}
+
+/* ===== Reflection step ===== */
+.reflection-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.reflection-back-btn:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.reflection-back-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reflection-selected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(74, 144, 226, 0.08);
+  padding: 0.5rem 0.875rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.reflection-selected-emoji {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.reflection-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--foreground);
+  font-weight: 400;
+}
+
+.reflection-textarea {
+  display: block;
+  width: 100%;
+  min-height: 9rem;
+  padding: 1rem 1.125rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  font-family: inherit;
+  border: 1.5px solid var(--input-border);
+  border-radius: 1rem;
+  background: var(--background);
+  color: var(--foreground);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.reflection-textarea::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.85;
+}
+
+.reflection-textarea:focus {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px var(--ring-alpha);
+}
+
+.reflection-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reflection-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+  cursor: pointer;
+  box-shadow: 0 4px 16px -4px rgba(74, 144, 226, 0.5);
+  transition: opacity 0.2s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+
+.reflection-save-btn:hover:not(:disabled) {
+  box-shadow: 0 6px 24px -4px rgba(74, 144, 226, 0.55);
+}
+
+.reflection-save-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.reflection-save-icon {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.reflection-save-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: reflection-spin 0.7s linear infinite;
+}
+
+@keyframes reflection-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Success step ===== */
+.emotional-check-in-step--success {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  min-height: 14rem;
+  padding: 1rem 0;
+}
+
+.success-step-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.success-step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px -6px rgba(74, 144, 226, 0.45);
+}
+
+.success-step-title {
+  margin: 0.5rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.35;
+  max-width: 22rem;
+}
+
+.success-step-subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--muted-foreground);
+  line-height: 1.55;
+  max-width: 24rem;
+}
+
+@media (min-width: 640px) {
+  .emotional-check-in {
+    padding: 2rem 2.25rem;
+  }
+
+  .emotional-check-in-heading {
+    font-size: 1.375rem;
+  }
+
+  .mood-btn {
+    flex: 1 1 auto;
+    min-width: 6.5rem;
+    max-width: none;
+    padding: 1.125rem 1.5rem;
+  }
+
+  .reflection-textarea {
+    min-height: 10rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .mood-buttons {
+    gap: 1rem;
+  }
+
+  .mood-btn {
+    min-width: 7.5rem;
+  }
 }

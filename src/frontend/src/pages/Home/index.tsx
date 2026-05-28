@@ -2,7 +2,6 @@ import "./Home.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import MoodSelector from "@/components/MoodSelector";
-import JournalCard from "@/components/JournalCard";
 import InsightsCard from "@/components/InsightsCard";
 import CalmNowCard from "@/components/CalmNowCard";
 import NeedHelp from "@/components/NeedHelp";
@@ -31,19 +30,25 @@ const Home = () => {
         Boas vindas, {nome} 👋
       </motion.h1>
 
-        <div className="home-grid-2">
-          <MoodSelector selectedMood={selectedMood} onSelectMood={setSelectedMood} />
-          <JournalCard
-            selectedMood={selectedMood}
-            onSaved={() => setInsightsRefreshTrigger((previous) => previous + 1)}
-          />
-        </div>
+      <section className="home-emotional-flow" aria-label="Registro emocional">
+        <MoodSelector
+          selectedMood={selectedMood}
+          onSelectMood={setSelectedMood}
+          onSaved={() => setInsightsRefreshTrigger((previous) => previous + 1)}
+        />
+      </section>
 
+      <section className="home-insights-section" aria-label="Insights emocionais">
+        <div className="home-insights-divider">
+          <span className="home-insights-divider-line" aria-hidden="true" />
+          <span className="home-insights-divider-label">Seu panorama emocional</span>
+          <span className="home-insights-divider-line" aria-hidden="true" />
+        </div>
         <InsightsCard refreshTrigger={insightsRefreshTrigger} />
+      </section>
 
       <div className="home-grid-2">
         <CalmNowCard />
-
         <NeedHelp />
       </div>
     </main>

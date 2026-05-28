@@ -1,12 +1,19 @@
 /* ===== Timeline Page ===== */
-.page-full {
-    min-height: 100vh;
+html:has(.timeline-main-content) {
+    scrollbar-gutter: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html:has(.timeline-main-content)::-webkit-scrollbar {
+    display: none;
 }
 
 .timeline-container {
     max-width: 72rem;
     margin: 0 auto;
     padding: 0 1rem;
+    width: 100%;
 }
 
 @media (min-width: 640px) {

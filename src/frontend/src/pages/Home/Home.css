@@ -1,4 +1,14 @@
 /* ===== Home Page ===== */
+html:has(.home-container) {
+  scrollbar-gutter: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html:has(.home-container)::-webkit-scrollbar {
+  display: none;
+}
+
 .page-full {
   min-height: 100vh;
 }
@@ -20,7 +30,48 @@
   padding-bottom: 2rem !important;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+}
+
+.home-emotional-flow {
+  width: 100%;
+}
+
+.home-insights-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.home-insights-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-insights-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(74, 144, 226, 0.2) 20%,
+    rgba(74, 144, 226, 0.2) 80%,
+    transparent
+  );
+}
+
+.home-insights-divider-label {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .home-heading-page {
