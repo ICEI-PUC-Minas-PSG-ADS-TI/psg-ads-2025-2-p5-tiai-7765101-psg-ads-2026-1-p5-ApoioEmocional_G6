@@ -30,6 +30,12 @@
   color: var(--primary);
 }
 
+.calm-now-description {
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 .breathing-area {
   display: flex;
   flex-direction: column;

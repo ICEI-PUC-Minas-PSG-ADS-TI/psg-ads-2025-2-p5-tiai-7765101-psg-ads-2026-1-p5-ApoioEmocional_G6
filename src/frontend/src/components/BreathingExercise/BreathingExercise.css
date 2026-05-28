@@ -1,0 +1,391 @@
+/* ===== Breathing Exercise Modal ===== */
+.breath-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(ellipse at center, rgba(20, 30, 60, 0.75), rgba(5, 10, 25, 0.92));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.breath-modal {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: linear-gradient(160deg, #0f172a 0%, #1a1f3a 50%, #1e1b4b 100%);
+  color: #e2e8f0;
+  border-radius: 32px;
+  padding: 2.5rem 2rem;
+  box-shadow:
+    0 30px 90px -20px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(167, 139, 250, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  scrollbar-width: thin;
+}
+
+.breath-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 2;
+}
+
+.breath-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+.breath-close:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+}
+
+.breath-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 32px;
+}
+
+.breath-particle {
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.6), transparent 70%);
+  filter: blur(1px);
+}
+
+.breath-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.breath-intro-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.breath-icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 32px -8px rgba(96, 165, 250, 0.5);
+}
+
+.breath-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #f1f5f9;
+}
+
+.breath-subtitle {
+  font-size: 0.975rem;
+  color: #94a3b8;
+  max-width: 420px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.breath-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.875rem;
+}
+
+.breath-tip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(167, 139, 250, 0.12);
+  border-radius: 18px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.breath-tip:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-2px);
+}
+
+.breath-tip-icon {
+  color: #a78bfa;
+}
+
+.breath-tip h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.breath-tip p {
+  font-size: 0.825rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.breath-phase-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+
+.breath-phase-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.breath-phase-card strong {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.breath-phase-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.breath-phase-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.breath-phase-inhale .breath-phase-dot {
+  background: #60a5fa;
+  box-shadow: 0 0 12px #60a5fa;
+}
+
+.breath-phase-hold .breath-phase-dot {
+  background: #a78bfa;
+  box-shadow: 0 0 12px #a78bfa;
+}
+
+.breath-phase-exhale .breath-phase-dot {
+  background: #6ee7b7;
+  box-shadow: 0 0 12px #6ee7b7;
+}
+
+.breath-cta {
+  margin: 0.5rem auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.95rem 2.25rem;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px -8px rgba(167, 139, 250, 0.55);
+  transition: box-shadow 0.25s;
+}
+
+.breath-cta:hover {
+  box-shadow: 0 16px 40px -8px rgba(167, 139, 250, 0.75);
+}
+
+.breath-cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.breath-stop {
+  margin: 0 auto;
+  padding: 0.65rem 1.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.breath-stop:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.breath-stage-exercise {
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.breath-meta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.825rem;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.breath-cycle {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.breath-timer {
+  font-variant-numeric: tabular-nums;
+  color: #cbd5e1;
+}
+
+.breath-orb-wrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breath-orb-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.5), rgba(96, 165, 250, 0.2) 60%, transparent 80%);
+  filter: blur(24px);
+}
+
+.breath-orb {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), transparent 60%),
+    linear-gradient(135deg, #60a5fa, #a78bfa 60%, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 80px rgba(167, 139, 250, 0.5),
+    inset 0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+.breath-orb-label {
+  position: absolute;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.breath-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.breath-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #a78bfa);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(167, 139, 250, 0.6);
+}
+
+.breath-stage-complete {
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.breath-complete-icon {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16px 40px -8px rgba(167, 139, 250, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.breath-complete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 540px) {
+  .breath-modal {
+    padding: 2rem 1.25rem;
+    border-radius: 26px;
+  }
+
+  .breath-tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .breath-orb-wrap {
+    width: 220px;
+    height: 220px;
+  }
+
+  .breath-orb {
+    width: 130px;
+    height: 130px;
+  }
+
+  .breath-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breath-particle,
+  .breath-orb,
+  .breath-orb-glow {
+    animation: none !important;
+    transition: none !important;
+  }
+}
