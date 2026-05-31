@@ -3,9 +3,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Wind } from "lucide-react";
 import BreathingExercise from "@/components/BreathingExercise";
+import { BREATHING_TECHNIQUES } from "@/constants/breathing";
 
 const CalmNowCard = () => {
   const [open, setOpen] = useState(false);
+  const [selectedKey, setSelectedKey] = useState<string>("quadrada");
+
+  const currentTechnique = BREATHING_TECHNIQUES[selectedKey];
 
   return (
     <motion.div
@@ -18,17 +22,39 @@ const CalmNowCard = () => {
         Precisa de um momento para respirar?
       </h3>
 
+      {/* Select para escolha da técnica */}
+      <div className="technique-select-container">
+        <label htmlFor="technique-select" className="technique-label">Escolha um objetivo:</label>
+        <select
+          id="technique-select"
+          value={selectedKey}
+          onChange={(e) => setSelectedKey(e.target.value)}
+          className="technique-select"
+        >
+          <option value="quadrada">Foco e Clareza (Quadrada)</option>
+          <option value="insonia">Dormir Melhor (4-7-8)</option>
+          <option value="ansiedade">Crise de Ansiedade (Ancoragem)</option>
+          <option value="suspiro">Alívio de Estresse Rápido (Suspiro)</option>
+          <option value="coerencia">Equilíbrio Geral (Coerente)</option>
+        </select>
+      </div>
+
       <p className="calm-now-description">
-        Uma sessão guiada de respiração para acalmar sua mente em apenas alguns minutos.
+        {currentTechnique.description}
       </p>
 
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <button onClick={() => setOpen(true)} className="calm-now-btn calm-now-btn-primary">
-          Iniciar Exercício de Respiração
+          Iniciar {currentTechnique.name}
         </button>
       </motion.div>
 
-      <BreathingExercise open={open} onClose={() => setOpen(false)} />
+      {/* Passando a técnica ativa por propriedade para o modal */}
+      <BreathingExercise 
+        open={open} 
+        onClose={() => setOpen(false)} 
+        technique={currentTechnique}
+      />
     </motion.div>
   );
 };
