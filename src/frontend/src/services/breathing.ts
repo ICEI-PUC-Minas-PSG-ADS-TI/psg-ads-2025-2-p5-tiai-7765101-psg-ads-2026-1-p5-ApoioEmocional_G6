@@ -4,6 +4,7 @@ import { api } from "./api";
 export interface BreathingSessionRequest {
   startTime: string; // ISO String
   endTime: string;   // ISO String
+  breathingType: number;
 }
 
 export const saveBreathingSession = async (data: BreathingSessionRequest): Promise<void> => {

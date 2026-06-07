@@ -3,26 +3,15 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Wind, Heart, Sparkles } from "lucide-react";
 import { saveBreathingSession } from "@/services/breathing";
+import { BreathingConfig } from "@/constants/breathing";
 
 interface BreathingExerciseProps {
   open: boolean;
   onClose: () => void;
+  technique: BreathingConfig; // Recebe a técnica selecionada do CalmNowCard
 }
 
 type Stage = "intro" | "exercise" | "complete";
-type Phase = "inhale" | "hold" | "exhale";
-
-const PHASE_DURATIONS: Record<Phase, number> = {
-  inhale: 4,
-  hold: 4,
-  exhale: 6,
-};
-
-const PHASE_LABELS: Record<Phase, string> = {
-  inhale: "Inspire",
-  hold: "Segure",
-  exhale: "Expire devagar",
-};
 
 const TOTAL_CYCLES = 4;
 
@@ -72,18 +61,21 @@ const TUTORIAL_TIPS = [
   },
 ];
 
-const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
+const BreathingExercise = ({ open, onClose, technique }: BreathingExerciseProps) => {
   const [stage, setStage] = useState<Stage>("intro");
-  const [phase, setPhase] = useState<Phase>("inhale");
+  const [stepIndex, setStepIndex] = useState(0); // Controla qual passo da sequência estamos
   const [cycle, setCycle] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [startTime, setStartTime] = useState<string | null>(null);
   const [sessionSaved, setSessionSaved] = useState(false);
 
+  // Mapeia o passo atual da sequência da técnica ativa
+  const currentStep = technique.sequence[stepIndex];
+
   useEffect(() => {
     if (open) {
       setStage("intro");
-      setPhase("inhale");
+      setStepIndex(0);
       setCycle(0);
       setElapsed(0);
       setStartTime(null);
@@ -98,25 +90,32 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  // Loop principal do exercício adaptado para sequências dinâmicas
   useEffect(() => {
     if (stage !== "exercise") return;
-    const duration = PHASE_DURATIONS[phase] * 1000;
+
+    const duration = currentStep.duration * 1000;
     const timer = window.setTimeout(() => {
-      if (phase === "inhale") setPhase("hold");
-      else if (phase === "hold") setPhase("exhale");
-      else {
+      const nextStep = stepIndex + 1;
+
+      if (nextStep < technique.sequence.length) {
+        setStepIndex(nextStep);
+      } else {
+        // Se terminou a sequência de passos, avança o ciclo global
         const nextCycle = cycle + 1;
         if (nextCycle >= TOTAL_CYCLES) {
           setStage("complete");
         } else {
           setCycle(nextCycle);
-          setPhase("inhale");
+          setStepIndex(0); // Reseta para o primeiro passo da técnica
         }
       }
     }, duration);
-    return () => window.clearTimeout(timer);
-  }, [stage, phase, cycle]);
 
+    return () => window.clearTimeout(timer);
+  }, [stage, stepIndex, cycle, technique]);
+
+  // Timer acumulativo de segundos passados
   useEffect(() => {
     if (stage !== "exercise") return;
     setElapsed(0);
@@ -125,15 +124,20 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
     return () => window.clearInterval(id);
   }, [stage]);
 
-  const totalDuration = useMemo(
-    () => TOTAL_CYCLES * (PHASE_DURATIONS.inhale + PHASE_DURATIONS.hold + PHASE_DURATIONS.exhale),
-    []
-  );
+  // Calcula de forma dinâmica o tempo total baseado na soma de tempos da técnica escolhida
+  const totalDuration = useMemo(() => {
+    const sequenceTotalTime = technique.sequence.reduce((acc, step) => acc + step.duration, 0);
+    return TOTAL_CYCLES * sequenceTotalTime;
+  }, [technique]);
+
   const progress = Math.min((elapsed / totalDuration) * 100, 100);
-  const orbScale = phase === "inhale" ? 1.5 : phase === "hold" ? 1.5 : 0.9;
+
+  // Escala dinâmica da esfera com base na propriedade 'action' definida na constante
+  const orbScale = currentStep?.action === "inflar" ? 1.5 : currentStep?.action === "esvaziar" ? 0.9 : 1.4;
+  
   const orbTransition = {
-    duration: PHASE_DURATIONS[phase],
-    ease: phase === "hold" ? "linear" : "easeInOut",
+    duration: currentStep?.duration || 4,
+    ease: currentStep?.action === "manter" ? "linear" : "easeInOut",
   } as const;
 
   const formatTime = (seconds: number) => {
@@ -148,6 +152,7 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
       await saveBreathingSession({
         startTime,
         endTime: new Date().toISOString(),
+        breathingType: technique.typeId, // Enviando o ID numérico do Enum configurado
       });
       setSessionSaved(true);
     } catch (error) {
@@ -221,9 +226,9 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
                     <div className="breath-icon-circle">
                       <Wind size={26} />
                     </div>
-                    <h2 className="breath-title">Vamos respirar juntos</h2>
+                    <h2 className="breath-title">{technique.name}</h2>
                     <p className="breath-subtitle">
-                      Um exercício guiado de 4 ciclos para acalmar mente e corpo.
+                      {technique.description} Exercício guiado de {TOTAL_CYCLES} ciclos.
                     </p>
                   </div>
 
@@ -249,12 +254,13 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
                     ))}
                   </div>
 
+                  {/* Renderização dinâmica dos cards contendo os tempos das fases da técnica ativa */}
                   <div className="breath-phase-cards">
-                    {(["inhale", "hold", "exhale"] as Phase[]).map((currentPhase) => (
-                      <div key={currentPhase} className={`breath-phase-card breath-phase-${currentPhase}`}>
+                    {technique.sequence.map((step, idx) => (
+                      <div key={idx} className="breath-phase-card breath-phase-inhale">
                         <span className="breath-phase-dot" />
-                        <strong>{PHASE_LABELS[currentPhase]}</strong>
-                        <span className="breath-phase-time">{PHASE_DURATIONS[currentPhase]}s</span>
+                        <strong>{step.phase}</strong>
+                        <span className="breath-phase-time">{step.duration}s</span>
                       </div>
                     ))}
                   </div>
@@ -286,7 +292,7 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
                   <div className="breath-orb-wrap">
                     <motion.div
                       className="breath-orb-glow"
-                      animate={{ scale: orbScale, opacity: phase === "exhale" ? 0.4 : 0.7 }}
+                      animate={{ scale: orbScale, opacity: currentStep?.action === "esvaziar" ? 0.4 : 0.7 }}
                       transition={orbTransition}
                     />
                     <motion.div
@@ -296,14 +302,14 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
                     >
                       <AnimatePresence mode="wait">
                         <motion.div
-                          key={phase}
+                          key={stepIndex}
                           className="breath-orb-label"
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.5 }}
                         >
-                          {PHASE_LABELS[phase]}
+                          {currentStep?.phase}
                         </motion.div>
                       </AnimatePresence>
                     </motion.div>
@@ -340,7 +346,7 @@ const BreathingExercise = ({ open, onClose }: BreathingExerciseProps) => {
                   </motion.div>
                   <h2 className="breath-title">Muito bem</h2>
                   <p className="breath-subtitle">
-                    Você tirou um momento para si. Perceba como seu corpo se sente agora.
+                    Você completou o exercício de {technique.name}. Perceba como seu corpo se sente agora.
                   </p>
                   <div className="breath-complete-actions">
                     <motion.button

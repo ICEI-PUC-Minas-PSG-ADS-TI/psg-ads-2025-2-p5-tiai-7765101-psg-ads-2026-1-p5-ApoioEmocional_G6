@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Entities
@@ -16,6 +17,9 @@ namespace backend.Entities
 
         [Required]
         public DateTime EndTime { get; set; }
+
+        [Required]
+        public BreathingTypeEnum BreathingType { get; set; }
 
     }
 }

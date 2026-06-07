@@ -111,3 +111,33 @@
 .calm-now-btn-outline:hover {
   background: var(--muted);
 }
+
+/* ===== Seletor de Técnicas ===== */
+.technique-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.technique-label {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.technique-select {
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--input-border);
+  background-color: var(--card);
+  color: var(--foreground);
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.technique-select:focus {
+  border-color: var(--primary);
+}

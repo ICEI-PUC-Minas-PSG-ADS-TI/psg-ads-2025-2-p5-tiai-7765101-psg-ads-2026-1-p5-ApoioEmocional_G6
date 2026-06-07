@@ -1,6 +1,7 @@
-﻿using backend.Entities;
+﻿using backend.DTOs;
+using backend.Entities;
+using backend.Enum;
 using backend.Repositories;
-using backend.DTOs;
 
 namespace backend.Services
 {
@@ -20,6 +21,7 @@ namespace backend.Services
             var log = new BreathingLog
             {
                 UserId = Guid.Parse(userId),
+                BreathingType = (BreathingTypeEnum)request.BreathingType,
                 StartTime = TimeZoneInfo.ConvertTimeFromUtc(request.StartTime.ToUniversalTime(), brazilZone),
                 EndTime = TimeZoneInfo.ConvertTimeFromUtc(request.EndTime.ToUniversalTime(), brazilZone)
             };
