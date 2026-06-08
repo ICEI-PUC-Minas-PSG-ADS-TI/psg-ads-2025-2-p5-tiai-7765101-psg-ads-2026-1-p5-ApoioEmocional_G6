@@ -1,7 +1,5 @@
 using backend.Entities;
 using backend.Repositories;
-using System;
-using System.Threading.Tasks;
 
 namespace backend.Services
 {
@@ -14,20 +12,19 @@ namespace backend.Services
             _repository = repository;
         }
 
-        public async Task<UserOnboarding> CreateAsync(UserOnboarding onboarding)
+        public Task<UserOnboarding> CreateAsync(UserOnboarding onboarding)
         {
-            // Validações e regras de negócio podem ser adicionadas aqui no futuro
-            return await _repository.AddAsync(onboarding);
+            return _repository.AddAsync(onboarding);
         }
 
-        public async Task<UserOnboarding?> GetByUserIdAsync(Guid userId)
+        public Task<UserOnboarding?> GetByUserIdAsync(Guid userId)
         {
-            return await _repository.GetByUserIdAsync(userId);
+            return _repository.GetByUserIdAsync(userId);
         }
 
-        public async Task<UserOnboarding> UpdateAsync(UserOnboarding onboarding)
+        public Task<UserOnboarding> UpdateAsync(UserOnboarding onboarding)
         {
-            return await _repository.UpdateAsync(onboarding);
+            return _repository.UpdateAsync(onboarding);
         }
     }
 }

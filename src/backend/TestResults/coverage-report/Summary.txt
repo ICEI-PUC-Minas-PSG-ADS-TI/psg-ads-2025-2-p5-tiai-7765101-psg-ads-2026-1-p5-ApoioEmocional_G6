@@ -1,0 +1,46 @@
+Summary
+  Generated on: 6/7/2026 - 10:53:39 PM
+  Coverage date: 6/7/2026 - 10:53:20 PM
+  Parser: Cobertura
+  Assemblies: 1
+  Classes: 24
+  Files: 24
+  Line coverage: 97.2%
+  Covered lines: 458
+  Uncovered lines: 13
+  Coverable lines: 471
+  Total lines: 976
+  Branch coverage: 85.4% (41 of 48)
+  Covered branches: 41
+  Total branches: 48
+  Method coverage: 98.2% (110 of 112)
+  Full method coverage: 95.5% (107 of 112)
+  Covered methods: 110
+  Fully covered methods: 107
+  Total methods: 112
+
+backend                                           97.2%
+  backend.Controllers.AuthController              92.9%
+  backend.Controllers.BreathingController          100%
+  backend.Controllers.EmotionsController           100%
+  backend.Controllers.UserOnboardingController    91.5%
+  backend.Data.AppDbContext                        100%
+  backend.DTOs.BreathingRequest                    100%
+  backend.DTOs.EmotionDailyGroupResponse           100%
+  backend.DTOs.EmotionRequest                      100%
+  backend.DTOs.EmotionResponse                     100%
+  backend.DTOs.LoginDTO                            100%
+  backend.DTOs.RegisterDTO                         100%
+  backend.DTOs.UserOnboardingRequestDto            100%
+  backend.DTOs.UserOnboardingResponseDto           100%
+  backend.Entities.BreathingLog                     80%
+  backend.Entities.EmotionLog                      100%
+  backend.Entities.User                            100%
+  backend.Entities.UserOnboarding                 88.8%
+  backend.Repositories.BreathingRepository         100%
+  backend.Repositories.EmotionRepository           100%
+  backend.Repositories.UserOnboardingRepository    100%
+  backend.Services.BreathingService                100%
+  backend.Services.EmotionService                  100%
+  backend.Services.TokenService                    100%
+  backend.Services.UserOnboardingService           100%

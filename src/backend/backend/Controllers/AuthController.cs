@@ -62,7 +62,7 @@ namespace backend.Controllers
                 return Unauthorized("Email ou senha inválidos");
 
             var token = _tokenService.GenerateToken(usuario);
-            var completedOnboarding = GetCompletedOnboarding(usuario.Id);
+            var completedOnboarding = await GetCompletedOnboarding(usuario.Id);
 
             return Ok(new { token, usuario.Nome, onboardingCompleted = completedOnboarding });
         }
