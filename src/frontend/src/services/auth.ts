@@ -1,6 +1,25 @@
 import { api } from "./api";
 import type { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "@/types/auth";
 
+export interface UserProfileResponse{
+  nome: string;
+  sobrenome: string;
+  email: string;
+}
+
+// Busca os dados do usuário logado diretamente da rota protegida
+export const getUserProfile = async (): Promise<UserProfileResponse> => {
+  const { token } = JSON.parse(localStorage.getItem("userToken") || "{}");
+  if (!token) throw new Error("Token não encontrado");
+
+  const response = await api.get<UserProfileResponse>("/Auth/profile", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post("/Auth/login", data);
   const { token, nome } = response.data;

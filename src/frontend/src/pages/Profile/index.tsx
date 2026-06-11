@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Plus, X, Flame, Sparkles, TrendingUp, Clock } from "lucide-react";
 import { moodEmojiMap } from "@/components/TimelineCard/data";
 import { getAllEmotions } from "@/services/emotion";
-import type { EmotionDailyGroupResponse } from "@/types/emotion";
+import { getUserProfile, UserProfileResponse } from "@/services/auth";
 import type { TimelineEntry } from "@/types/timelineCard";
-import "./Profile.css"; // profile page styles
+import "./Profile.css";
 
 const WEEKDAYS = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MONTH_NAMES = [
@@ -31,38 +31,47 @@ function formatDateKey(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
-function normalizeDateKey(date: string) {
-  return date.split("T")[0];
-}
-
-function buildEntryMap(groups: EmotionDailyGroupResponse[]): Map<string, EntryWithTime> {
+// Converte a lista plana de registos de emoções recebidas do Backend para o mapa do calendário
+function buildEntryMap(emotions: any[]): Map<string, EntryWithTime> {
   const map = new Map<string, EntryWithTime>();
+  if (!emotions || !Array.isArray(emotions)) return map;
 
-  for (const group of groups) {
-    const sorted = [...group.emotions].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
-    const emotion = sorted[0];
+  // Ordena por data decrescente (do mais recente para o mais antigo)
+  const sorted = [...emotions].sort((a, b) => {
+    const dateA = new Date(a.createdAt || a.CreatedAt).getTime();
+    const dateB = new Date(b.createdAt || b.CreatedAt).getTime();
+    return dateB - dateA;
+  });
+
+  for (const emotion of sorted) {
     if (!emotion) continue;
 
-    const dateKey = normalizeDateKey(group.date);
-    const createdAt = new Date(emotion.createdAt);
+    const rawDate = emotion.createdAt || emotion.CreatedAt;
+    const createdAt = new Date(rawDate);
+    if (isNaN(createdAt.getTime())) continue;
+
+    const dateKey = formatDateKey(createdAt);
+
+    // Se já foi adicionado um registo mais recente deste dia, ignora os mais antigos
+    if (map.has(dateKey)) continue;
+
+    const rawMood = emotion.mood || emotion.Mood || emotion.emotion || emotion.Emotion || "";
+    const cleanMood = rawMood ? rawMood.trim() : "";
+    const diaryText = emotion.diary || emotion.Diary || "";
 
     map.set(dateKey, {
-      id: emotion.id,
+      id: emotion.id || emotion.Id,
       date: dateKey,
-      mood: emotion.mood,
-      emoji: moodEmojiMap[emotion.mood] || "😶",
-      intensity: MOOD_INTENSITY[emotion.mood] || 3,
+      mood: cleanMood,
+      emoji: moodEmojiMap[cleanMood] || "😶",
+      intensity: MOOD_INTENSITY[cleanMood] || 3,
       dayLabel: createdAt.toLocaleDateString("pt-BR", {
         weekday: "long",
         day: "2-digit",
         month: "long",
       }),
-      preview: emotion.diary
-        ? `${emotion.diary.substring(0, 60)}...`
-        : "Sem descrição",
-      fullText: emotion.diary || "Sem descrição adicional",
+      preview: diaryText ? `${diaryText.substring(0, 60)}...` : "Sem descrição",
+      fullText: diaryText || "Sem descrição adicional",
       time: createdAt.toLocaleTimeString("pt-BR", {
         hour: "2-digit",
         minute: "2-digit",
@@ -87,32 +96,45 @@ const Profile = () => {
   const [selected, setSelected] = useState<EntryWithTime | null>(null);
   const [entryMap, setEntryMap] = useState<Map<string, EntryWithTime>>(() => new Map());
   const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState<UserProfileResponse | null>(null);
   const [userInitial, setUserInitial] = useState("?");
 
   useEffect(() => {
-    const userToken = localStorage.getItem("userToken");
-    if (userToken) {
-      try {
-        const { nome } = JSON.parse(userToken);
-        if (nome && typeof nome === "string") {
-          setUserInitial(nome.trim().charAt(0).toUpperCase());
-        }
-      } catch {
-        /* ignore */
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+
+      // Chamada resiliente 1: Histórico de Emoções
       try {
-        const data = await getAllEmotions();
-        setEntryMap(buildEntryMap(data));
+        const emotionsData = await getAllEmotions();
+        setEntryMap(buildEntryMap(emotionsData));
       } catch (error) {
-        console.error("Erro ao carregar perfil:", error);
-      } finally {
-        setLoading(false);
+        console.error("Erro ao carregar histórico de emoções:", error);
       }
+
+      // Chamada resiliente 2: Dados do Perfil no Banco
+      try {
+        const profileData = await getUserProfile();
+        setUserProfile(profileData);
+        if (profileData && profileData.nome) {
+          setUserInitial(profileData.nome.trim().charAt(0).toUpperCase());
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dados de perfil do utilizador:", error);
+
+        // Fallback: tenta recuperar o nome guardado localmente no login se a rota falhar
+        const userToken = localStorage.getItem("userToken");
+        if (userToken) {
+          try {
+            const { nome } = JSON.parse(userToken);
+            if (nome) {
+              setUserInitial(nome.trim().charAt(0).toUpperCase());
+              setUserProfile({ nome, sobrenome: "", email: "" });
+            }
+          } catch {}
+        }
+      }
+
+      setLoading(false);
     };
 
     void fetchData();
@@ -171,7 +193,7 @@ const Profile = () => {
   if (loading) {
     return (
       <main className="profile-container profile-main-content">
-        <p className="text-body">Carregando seu perfil...</p>
+        <p className="text-body">Carregando o seu perfil...</p>
       </main>
     );
   }
@@ -182,168 +204,172 @@ const Profile = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="profile-header"
+          className="profile-header flex items-center gap-4"
         >
           <div className="profile-avatar-lg">{userInitial}</div>
           <div>
-            <h1 className="heading-page">Meu Perfil</h1>
-            <p className="text-body">Acompanhe sua jornada emocional ao longo do tempo.</p>
+            <h1 className="heading-page">
+              {userProfile && userProfile.sobrenome
+                ? `${userProfile.nome} ${userProfile.sobrenome}`
+                : userProfile?.nome || "Meu Perfil"}
+            </h1>
+            <p className="text-body text-gray-500">{userProfile?.email || "Acompanhe a sua jornada emocional."}</p>
           </div>
         </motion.div>
 
         <div className="profile-dashboard">
-        <motion.section
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          className="card emotional-calendar"
-        >
-          <div className="calendar-head">
-            <div>
-              <h2 className="heading-card">Calendário Emocional</h2>
-              <p className="text-small">Toque em um dia para ver ou registrar uma reflexão.</p>
-            </div>
-            <div className="calendar-month-nav">
-              <button
-                className="calendar-nav-btn"
-                onClick={() =>
-                  setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))
-                }
-                aria-label="Mês anterior"
-              >
-                ‹
-              </button>
-              <span className="calendar-month-label">
-                {MONTH_NAMES[viewMonth.getMonth()]} {viewMonth.getFullYear()}
-              </span>
-              <button
-                className="calendar-nav-btn"
-                onClick={() =>
-                  setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))
-                }
-                aria-label="Próximo mês"
-              >
-                ›
-              </button>
-            </div>
-          </div>
-
-          <div className="calendar-weekdays">
-            {WEEKDAYS.map((d, i) => (
-              <span key={i} className="calendar-weekday">
-                {d}
-              </span>
-            ))}
-          </div>
-
-          <div className="calendar-grid">
-            {days.map((cell, idx) => {
-              if (!cell.date) return <div key={cell.key} className="calendar-cell empty" />;
-
-              const entry = entryMap.get(cell.key);
-              const isToday = cell.key === todayKey;
-              const isFuture = cell.date > today;
-
-              return (
-                <motion.button
-                  key={cell.key}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.008, duration: 0.25 }}
-                  whileHover={!isFuture ? { scale: 1.08, y: -2 } : undefined}
-                  whileTap={!isFuture ? { scale: 0.95 } : undefined}
-                  className={`calendar-cell${entry ? " has-entry" : ""}${isToday ? " today" : ""}${isFuture ? " future" : ""}`}
-                  onClick={() => {
-                    if (isFuture) return;
-                    if (entry) setSelected(entry);
-                    else navigate("/home");
-                  }}
-                  disabled={isFuture}
+          <motion.section
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="card emotional-calendar"
+          >
+            <div className="calendar-head">
+              <div>
+                <h2 className="heading-card">Calendário Emocional</h2>
+                <p className="text-small">Toque num dia para ver ou registar uma reflexão.</p>
+              </div>
+              <div className="calendar-month-nav">
+                <button
+                  className="calendar-nav-btn"
+                  onClick={() =>
+                    setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))
+                  }
+                  aria-label="Mês anterior"
                 >
-                  <span className="calendar-emoji">
-                    {entry ? entry.emoji : isFuture ? "" : <Plus size={14} strokeWidth={2.4} />}
-                  </span>
-                  <span className="calendar-daynum">{cell.date.getDate()}</span>
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.section>
-
-        <div className="profile-stats-grid">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="card stat-card streak-card"
-          >
-            <div className="stat-icon stat-icon-flame">
-              <Flame size={20} />
+                  ‹
+                </button>
+                <span className="calendar-month-label">
+                  {MONTH_NAMES[viewMonth.getMonth()]} {viewMonth.getFullYear()}
+                </span>
+                <button
+                  className="calendar-nav-btn"
+                  onClick={() =>
+                    setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))
+                  }
+                  aria-label="Próximo mês"
+                >
+                  ›
+                </button>
+              </div>
             </div>
-            <div>
-              <p className="text-small">Sequência atual</p>
-              <p className="stat-value">
-                {stats.streak} {stats.streak === 1 ? "dia" : "dias"}
-              </p>
-              <p className="text-small">Continue cuidando de você 💛</p>
-            </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="card stat-card"
-          >
-            <h3 className="heading-card">Distribuição de humor</h3>
-            <div className="mood-dist-list">
-              {stats.distArr.length === 0 ? (
-                <p className="text-small">Nenhum registro ainda.</p>
-              ) : (
-                stats.distArr.map((d) => (
-                  <div key={d.emoji} className="mood-dist-row">
-                    <span className="mood-dist-emoji">{d.emoji}</span>
-                    <div className="mood-dist-bar-track">
-                      <motion.div
-                        className="mood-dist-bar-fill"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${d.pct}%` }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
+            <div className="calendar-weekdays">
+              {WEEKDAYS.map((d, i) => (
+                <span key={i} className="calendar-weekday">
+                  {d}
+                </span>
+              ))}
+            </div>
+
+            <div className="calendar-grid">
+              {days.map((cell, idx) => {
+                if (!cell.date) return <div key={cell.key} className="calendar-cell empty" />;
+
+                const entry = entryMap.get(cell.key);
+                const isToday = cell.key === todayKey;
+                const isFuture = cell.date > today;
+
+                return (
+                  <motion.button
+                    key={cell.key}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.008, duration: 0.25 }}
+                    whileHover={!isFuture ? { scale: 1.08, y: -2 } : undefined}
+                    whileTap={!isFuture ? { scale: 0.95 } : undefined}
+                    className={`calendar-cell${entry ? " has-entry" : ""}${isToday ? " today" : ""}${isFuture ? " future" : ""}`}
+                    onClick={() => {
+                      if (isFuture) return;
+                      if (entry) setSelected(entry);
+                      else navigate("/home");
+                    }}
+                    disabled={isFuture}
+                  >
+                    <span className="calendar-emoji">
+                      {entry ? entry.emoji : isFuture ? "" : <Plus size={14} strokeWidth={2.4} />}
+                    </span>
+                    <span className="calendar-daynum">{cell.date.getDate()}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </motion.section>
+
+          <div className="profile-stats-grid">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="card stat-card streak-card"
+            >
+              <div className="stat-icon stat-icon-flame">
+                <Flame size={20} />
+              </div>
+              <div>
+                <p className="text-small">Sequência atual</p>
+                <p className="stat-value">
+                  {stats.streak} {stats.streak === 1 ? "dia" : "dias"}
+                </p>
+                <p className="text-small">Continue cuidando de si 💛</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="card stat-card"
+            >
+              <h3 className="heading-card">Distribuição de humor</h3>
+              <div className="mood-dist-list">
+                {stats.distArr.length === 0 ? (
+                  <p className="text-small">Nenhum registo ainda.</p>
+                ) : (
+                  stats.distArr.map((d) => (
+                    <div key={d.emoji} className="mood-dist-row">
+                      <span className="mood-dist-emoji">{d.emoji}</span>
+                      <div className="mood-dist-bar-track">
+                        <motion.div
+                          className="mood-dist-bar-fill"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${d.pct}%` }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                        />
+                      </div>
+                      <span className="mood-dist-pct">{d.pct}%</span>
                     </div>
-                    <span className="mood-dist-pct">{d.pct}%</span>
-                  </div>
-                ))
-              )}
-            </div>
-          </motion.div>
+                  ))
+                )}
+              </div>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="card stat-card insights-modern"
-          >
-            <div className="insights-modern-head">
-              <Sparkles size={18} className="insights-modern-icon" />
-              <h3 className="heading-card">Insights emocionais</h3>
-            </div>
-            <div className="insights-modern-list">
-              <div className="insight-pill">
-                <TrendingUp size={14} />
-                <span>Suas emoções positivas cresceram nos últimos 7 dias.</span>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="card stat-card insights-modern"
+            >
+              <div className="insights-modern-head">
+                <Sparkles size={18} className="insights-modern-icon" />
+                <h3 className="heading-card">Insights emocionais</h3>
               </div>
-              <div className="insight-pill">
-                <Sparkles size={14} />
-                <span>Você costuma se sentir mais calmo aos finais de semana.</span>
+              <div className="insights-modern-list">
+                <div className="insight-pill">
+                  <TrendingUp size={14} />
+                  <span>As suas emoções positivas cresceram nos últimos 7 dias.</span>
+                </div>
+                <div className="insight-pill">
+                  <Sparkles size={14} />
+                  <span>Costuma sentir-se mais calmo aos fins de semana.</span>
+                </div>
+                <div className="insight-pill">
+                  <Clock size={14} />
+                  <span>A maioria dos seus registos ocorre no fim do dia.</span>
+                </div>
               </div>
-              <div className="insight-pill">
-                <Clock size={14} />
-                <span>A maioria dos seus registros acontece no fim do dia.</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
         </div>
       </main>
 

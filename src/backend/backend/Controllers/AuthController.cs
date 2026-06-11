@@ -8,8 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using System;
-using System.Linq;
-using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -26,6 +26,33 @@ namespace backend.Controllers
             _context = context;
             _tokenService = tokenService;
             _onboardingService = userOnboardingService;
+        }
+
+
+        [HttpGet("profile")]
+        [Authorize] // Garante que apenas usuários com JWT válido acessem
+        public async Task<IActionResult> GetProfile()
+        {
+            // Extrai o ID buscando tanto NameIdentifier tradicional quanto a claim padrão "sub"
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                              ?? User.FindFirst("sub")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return BadRequest(new { success = false, message = "Token inválido ou ID do usuário não mapeado." });
+            }
+
+            var usuario = await _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new { u.Nome, u.Sobrenome, u.Email })
+                .FirstOrDefaultAsync();
+
+            if (usuario == null)
+            {
+                return NotFound(new { success = false, message = "Usuário não encontrado no banco de dados." });
+            }
+
+            return Ok(usuario);
         }
 
         [HttpPost("register")]
