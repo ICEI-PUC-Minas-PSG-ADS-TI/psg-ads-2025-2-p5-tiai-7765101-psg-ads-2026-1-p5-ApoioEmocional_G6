@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Heart, Shield } from "lucide-react";
+import { api } from "../../services/api";
 import "./Chat.css";
 
 interface Message {
@@ -9,23 +10,25 @@ interface Message {
   text: string;
 }
 
+interface ChatResponse {
+  response: string;
+}
+
+interface ChatHistoryMessage {
+  role: string;
+  content: string;
+}
+
 const quickActions = [
   { label: "Estou me sentindo ansioso(a)", emoji: "😰" },
   { label: "Estou triste", emoji: "😢" },
   { label: "Preciso conversar", emoji: "💬" },
 ];
 
-const aiResponses: Record<string, string> = {
-  "Estou me sentindo ansioso(a)":
-    "Eu te escuto. A ansiedade pode ser intensa, mas voce nao esta sozinho(a). Respire devagar: inspire por 4 segundos, segure por 4 e solte por 4. Quer tentar um exercicio guiado de respiracao?",
-  "Estou triste":
-    "Obrigado por compartilhar isso. Reconhecer como voce se sente exige coragem. A tristeza faz parte da vida, e tudo bem acolher esse sentimento. O que voce acha que pode estar por tras disso?",
-  "Preciso conversar":
-    "Estou aqui com voce. Va no seu tempo, sem pressa. Pode compartilhar o que estiver passando pela sua mente, e eu vou te ouvir sem julgamentos. 💙",
-};
+const DEFAULT_PROVIDER = "gemini";
 
-const defaultResponse =
-  "Obrigado por compartilhar. Estou aqui para te ouvir e apoiar. Lembre-se: todo sentimento e valido, e se expressar e um sinal de forca. Quer explorar um pouco mais o que voce esta sentindo?";
+const fallbackResponse =
+  "Nao consegui falar com a API agora, mas continuo aqui com voce. Tente novamente em alguns instantes ou escreva de outro jeito o que esta sentindo.";
 
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -37,8 +40,10 @@ const Chat = () => {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const typingTimeoutRef = useRef<number | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -48,25 +53,81 @@ const Chat = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const sendMessage = (text: string) => {
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        window.clearTimeout(typingTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const buildHistory = (nextUserMessage: string): ChatHistoryMessage[] => {
+    const history = messages.flatMap((message) => {
+      if (message.id === 0) {
+        return [];
+      }
+
+      return [
+        {
+          role: message.role === "user" ? "user" : "assistant",
+          content: message.text,
+        },
+      ];
+    });
+
+    return [
+      ...history,
+      {
+        role: "user",
+        content: nextUserMessage,
+      },
+    ];
+  };
+
+  const sendMessage = async (text: string) => {
     if (!text.trim()) return;
+
+    if (isSending) return;
+
+    const trimmedText = text.trim();
     const userMsg: Message = { id: Date.now(), role: "user", text: text.trim() };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
+    setIsSending(true);
 
-    const response = aiResponses[text.trim()] || defaultResponse;
+    try {
+      const response = await api.post<ChatResponse>("/chat", {
+        provider: DEFAULT_PROVIDER,
+        message: trimmedText,
+        history: buildHistory(trimmedText),
+      });
 
-    setTimeout(() => {
-      setIsTyping(false);
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now() + 1, role: "ai", text: response },
-      ]);
-    }, 1800);
+      const aiText = response.data.response?.trim() || fallbackResponse;
+
+      typingTimeoutRef.current = window.setTimeout(() => {
+        setIsTyping(false);
+        setIsSending(false);
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, role: "ai", text: aiText },
+        ]);
+      }, 900);
+    } catch {
+      typingTimeoutRef.current = window.setTimeout(() => {
+        setIsTyping(false);
+        setIsSending(false);
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, role: "ai", text: fallbackResponse },
+        ]);
+      }, 700);
+    }
+
+    inputRef.current?.focus();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendMessage(input);
   };
@@ -156,6 +217,7 @@ const Chat = () => {
                   whileTap={{ scale: 0.96 }}
                   onClick={() => sendMessage(action.label)}
                   className="chat-quick-btn"
+                  disabled={isSending}
                 >
                   <span>{action.emoji}</span>
                   <span>{action.label}</span>
@@ -179,7 +241,7 @@ const Chat = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="chat-send-btn"
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || isSending}
                 >
                   <Send size={18} />
                 </motion.button>
