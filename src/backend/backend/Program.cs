@@ -6,6 +6,7 @@ using backend.Infrastructure.Interfaces;
 using backend.Middleware;
 using backend.Repositories;
 using backend.Services;
+using backend.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -79,6 +80,9 @@ builder.Services.AddScoped<IAIProviderFactory, AIProviderFactory>();
 builder.Services.AddScoped<IChatAssistantService, ChatAssistantService>();
 builder.Services.AddScoped<IPromptService, PromptService>();
 
+// Register IHttpContextAccessor for accessing user id in services
+builder.Services.AddHttpContextAccessor();
+
 // Token service
 builder.Services.AddScoped<TokenService>();
 
@@ -89,6 +93,9 @@ builder.Services.AddScoped<IBreathingRepository, BreathingRepository>();
 builder.Services.AddScoped<IBreathingService, BreathingService>();
 builder.Services.AddScoped<IUserOnboardingRepository, UserOnboardingRepository>();
 builder.Services.AddScoped<IUserOnboardingService, UserOnboardingService>();
+
+// Conversations
+builder.Services.AddRepositories();
 
 // Jwt Authentication
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty);
