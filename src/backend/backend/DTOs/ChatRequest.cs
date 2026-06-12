@@ -14,5 +14,5 @@ public sealed class ChatRequest
     [MinLength(1)]
     public string Message { get; set; } = string.Empty;
 
-    public List<ChatMessage> History { get; set; } = [];
+    public List<ChatMessage> History { get; set; } = new List<ChatMessage>();
 }

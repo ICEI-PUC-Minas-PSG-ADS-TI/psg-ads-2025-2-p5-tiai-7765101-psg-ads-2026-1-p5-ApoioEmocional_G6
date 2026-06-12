@@ -1,24 +1,11 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Heart, Shield } from "lucide-react";
+import { sendChatMessage, getTodayMessages } from "../../services/chat";
 import VoiceInputButton, { type VoiceInputButtonHandle } from "@/components/VoiceInputButton";
 import { api } from "../../services/api";
 import "./Chat.css";
-
-interface Message {
-  id: number;
-  role: "user" | "ai";
-  text: string;
-}
-
-interface ChatResponse {
-  response: string;
-}
-
-interface ChatHistoryMessage {
-  role: string;
-  content: string;
-}
+import { ChatHistoryMessage, ChatHistoryMessageDto, Message } from "@/types/chat";
 
 const quickActions = [
   { label: "Estou me sentindo ansioso(a)", emoji: "😰" },
@@ -26,10 +13,6 @@ const quickActions = [
   { label: "Preciso conversar", emoji: "💬" },
 ];
 
-const DEFAULT_PROVIDER = "gemini";
-
-const fallbackResponse =
-  "Nao consegui falar com a API agora, mas continuo aqui com voce. Tente novamente em alguns instantes ou escreva de outro jeito o que esta sentindo.";
 
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -42,6 +25,7 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const voiceInputRef = useRef<VoiceInputButtonHandle>(null);
@@ -61,6 +45,28 @@ const Chat = () => {
         window.clearTimeout(typingTimeoutRef.current);
       }
     };
+  }, []);
+
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const response = await getTodayMessages();
+
+        if (response.messages.length > 0) {
+          setMessages(response.messages.map((message) => ({
+            id: message.id,
+            role: message.role === "user" ? "user" : "ai",
+            text: message.content,
+          })));
+        }
+      } catch {
+        // historico de chat falhou; manter mensagem inicial
+      } finally {
+        setIsLoadingHistory(false);
+      }
+    };
+
+    void loadHistory();
   }, []);
 
   const buildHistory = (nextUserMessage: string): ChatHistoryMessage[] => {
@@ -101,13 +107,7 @@ const Chat = () => {
     setIsSending(true);
 
     try {
-      const response = await api.post<ChatResponse>("/chat", {
-        provider: DEFAULT_PROVIDER,
-        message: trimmedText,
-        history: buildHistory(trimmedText),
-      });
-
-      const aiText = response.data.response?.trim() || fallbackResponse;
+      const aiText = await sendChatMessage(trimmedText, buildHistory(trimmedText));
 
       typingTimeoutRef.current = window.setTimeout(() => {
         setIsTyping(false);
@@ -123,7 +123,7 @@ const Chat = () => {
         setIsSending(false);
         setMessages((prev) => [
           ...prev,
-          { id: Date.now() + 1, role: "ai", text: fallbackResponse },
+          { id: Date.now() + 1, role: "ai", text: "Ocorreu um erro. Tente novamente." },
         ]);
       }, 700);
     }
@@ -167,23 +167,34 @@ const Chat = () => {
           {/* Messages */}
           <div className="chat-messages">
             <div className="chat-messages-inner">
-              <AnimatePresence initial={false}>
-                {messages.map((msg) => (
+                  <AnimatePresence initial={false}>
+                {isLoadingHistory ? (
                   <motion.div
-                    key={msg.id}
                     initial={{ opacity: 0, y: 16, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className={`chat-bubble-wrap ${msg.role}`}
+                    className="chat-loading"
                   >
-                    <div className={`chat-bubble ${msg.role}`}>
-                      {msg.role === "ai" && (
-                        <span className="chat-bubble-avatar">💙</span>
-                      )}
-                      <p>{msg.text}</p>
-                    </div>
+                    <div className="chat-loading-text">Carregando suas mensagens do dia...</div>
                   </motion.div>
-                ))}
+                ) : (
+                  messages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, y: 16, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className={`chat-bubble-wrap ${msg.role}`}
+                    >
+                      <div className={`chat-bubble ${msg.role}`}>
+                        {msg.role === "ai" && (
+                          <span className="chat-bubble-avatar">💙</span>
+                        )}
+                        <p>{msg.text}</p>
+                      </div>
+                    </motion.div>
+                  ))
+                )}
               </AnimatePresence>
 
               {/* Typing indicator */}
