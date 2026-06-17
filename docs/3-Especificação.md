@@ -1,7 +1,4 @@
-
 # 3. Especificações do Projeto
-
-📌 **Pré-requisito:** Planejamento do Projeto (Cronograma e Sprints definidos).
 
 Nesta seção serão detalhados:
 
@@ -96,7 +93,6 @@ Eles garantem a qualidade da solução.
 | RNF-04 | O sistema deve suportar o Modo Escuro (Dark Mode) para conforto visual do usuário em diferentes ambientes. | 🟢 BAIXA |
 
 # 3.4 Restrições do Projeto
-📌 **Restrições** são limitações externas impostas ao projeto.
 
 Elas podem envolver:
 - 📅 Prazo
@@ -122,8 +118,6 @@ Elas podem envolver:
 ---
 
 ## 3.5 Regras de Negócio
-
-A tabela abaixo deve ser preenchida com as regras de negócio que **impactam seu projeto**. Os textos no quadro são apenas ilustrativos.
 
 |ID    | Regra de Negócio                                                       |
 |-------|-----------------------------------------------------------------------|
