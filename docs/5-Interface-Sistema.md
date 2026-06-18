@@ -42,9 +42,9 @@ Nesta sprint, foi implementado o dashboard principal com a funcionalidade de reg
   * **Panorama Emocional:** Gráfico/insights mostrando o padrão emocional do usuário
   * **Atalho "Acalme-se Agora":** Quick access para técnicas de respiração e meditação
   * **Atalho "Preciso de Ajuda":** Quick access para conversar com o assistente de IA
-* ![Tela Home - Dashboard](images/tela-home-dashboard.png)
+* ![Tela Home - Dashboard](images/tela-home-dashboard-insigths.png)
 * ![Tela Home - Registro de Emoção](images/tela-home-registro-emocao.png)
-* ![Tela Home - Com Insights](images/tela-home-com-insights.png) <br><br>
+ <br><br>
 
 > 💡 **Nota:** O registro de emoção envia os dados para a API e atualiza imediatamente os insights. O usuário pode registrar múltiplas emoções durante o dia, e o sistema rastreia todas elas.
 
@@ -73,8 +73,7 @@ Nesta sprint, foram implementadas as funcionalidades mais complexas: o chat com 
   * **Agrupamento por Semana:** Entradas organizadas cronologicamente
   * **Detalhes Expandíveis:** Ao clicar, expande para mostrar o texto completo da anotação
 * ![Tela Timeline - Visão Geral](images/tela-timeline-visao-geral.png)
-* ![Tela Timeline - Com Filtros](images/tela-timeline-com-filtros.png)
-* ![Tela Timeline - Entrada Expandida](images/tela-timeline-entrada-expandida.png) <br><br>
+* ![Tela Timeline - Com Filtros](images/tela-timeline-com-filtros.png) <br><br>
 
 > 💡 **Nota:** A timeline integra dados reais do banco de dados, mostrando o histórico completo de emoções registradas pelo usuário.
 
@@ -94,8 +93,7 @@ Nesta sprint final, foi implementada a tela de perfil com visualização de padr
   * **Modal de Detalhes:** Apresenta data completa (formatada em português), emoji, humor, intensidade e anotação (diary) associada
   * **Estatísticas:** Indicadores visuais como streak de dias, humores predominantes, e insights de tendências
 * ![Tela Profile - Calendário](images/tela-profile-calendario.png)
-* ![Tela Profile - Com Seleção](images/tela-profile-com-selecao.png)
-* ![Tela Profile - Modal de Detalhes](images/tela-profile-modal-detalhes.png) <br><br>
+* ![Tela Profile - Com Seleção](images/tela-profile-com-selecao.png) <br><br>
 
 ### 5.4.2. Layout Autenticado
 * **Funcionalidade:** Navegação e estrutura base do sistema autenticado.
