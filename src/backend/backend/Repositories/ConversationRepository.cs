@@ -24,10 +24,10 @@ namespace backend.Repositories
 
         public async Task<Conversation?> GetTodayConversationAsync(Guid userId)
         {
-            var utcToday = DateTime.UtcNow.Date;
+            var today = DateTime.Now.Date;
             return await _db.Conversations
                 .Include(c => c.Messages)
-                .Where(c => c.UserId == userId && c.Date == utcToday)
+                .Where(c => c.UserId == userId && c.Date == today)
                 .FirstOrDefaultAsync();
         }
 
