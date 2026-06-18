@@ -132,10 +132,10 @@ Responsável por prazos, Kanban e priorização do backlog.
 
 | Responsável   | Papel                | Tarefa                            | Início | Prazo | Status |
 | ------------- | -------------------- | --------------------------------- | ------ | ----- | ------ |
-| Arthur Coelho | Gerente de Qualidade | Correção de bugs                  | 22/05  | 05/06 | ❌      |
-| Pedro Dias    | Tech Lead            | Finalizar relatórios e dashboards | 01/06  | 15/06 | ❌      |
-| Melissa Baia  | Facilitador Ágil     | Preencher Relatório APC           | 10/06  | 20/06 | ❌      |
-| Lucas Dias    | Arquiteto de Dados   | Testes finais e consolidar README | 15/06  | 25/06 | ❌      |
+| Arthur Coelho | Gerente de Qualidade | Correção de bugs                  | 22/05  | 18/06 | ✔️      |
+| Pedro Dias    | Tech Lead            | Finalizar relatórios e dashboards | 01/06  | 18/06 | ✔️      |
+| Melissa Baia  | Facilitador Ágil     | Preencher Relatório APC           | 10/06  | 18/06 | ✔️      |
+| Lucas Dias    | Arquiteto de Dados   | Testes finais e consolidar README | 15/06  | 18/06 | ✔️      |
 
 
 ---

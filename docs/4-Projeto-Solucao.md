@@ -5,7 +5,7 @@
 
 **Front-end → API (Back-end) → Banco de Dados**
 
-![Exemplo de Arquitetura](images/diagrama-emotai.png)
+![Arquitetura EmotAI](images/diagrama-emotai.png)
 
 ---
 

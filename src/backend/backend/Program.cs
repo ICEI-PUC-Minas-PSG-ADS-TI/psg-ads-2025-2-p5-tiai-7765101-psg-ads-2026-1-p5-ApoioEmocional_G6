@@ -89,6 +89,7 @@ builder.Services.AddScoped<TokenService>();
 // Repository & Services
 builder.Services.AddScoped<IEmotionRepository, EmotionRepository>();
 builder.Services.AddScoped<IEmotionService, EmotionService>();
+builder.Services.AddScoped<IInsightsService, InsightsService>();
 builder.Services.AddScoped<IBreathingRepository, BreathingRepository>();
 builder.Services.AddScoped<IBreathingService, BreathingService>();
 builder.Services.AddScoped<IUserOnboardingRepository, UserOnboardingRepository>();

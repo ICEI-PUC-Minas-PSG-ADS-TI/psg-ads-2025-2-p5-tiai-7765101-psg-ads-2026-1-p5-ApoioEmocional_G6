@@ -1,9 +1,5 @@
 # 1. Introdução
 
-Nesta seção, você vai apresentar **o contexto e a motivação do seu projeto**, explicando o problema que ele resolve, o que pretende alcançar e para quem ele é útil.
-
----
-
 ## 1.1 Problema
 
 A Organização Mundial da Saúde (OMS) aponta que transtornos de ansiedade e depressão estão entre as principais causas de incapacidade no mundo, com impacto crescente na qualidade de vida e na produtividade. Paralelamente, o estigma associado à saúde mental e a dificuldade de falar abertamente sobre emoções fazem com que muitas pessoas adiem a reflexão sobre o próprio estado emocional ou não encontrem canais simples para isso.
@@ -41,5 +37,3 @@ O impacto social da solução reside na democratização do acesso a um recurso 
 O público-alvo da plataforma compreende jovens e adultos que desejam acompanhar a própria saúde emocional, refletir sobre o humor e identificar padrões ao longo do tempo, sem necessariamente estarem em acompanhamento psicológico ou psiquiátrico. São pessoas que buscam um espaço para registro de sentimentos e desabafos e que se beneficiam de visualizações simples (gráficos, tendências) e de recursos de acolhimento, como técnicas de respiração e contatos de ajuda.
 
 O perfil dos usuários inclui acesso a smartphone ou computador e nível básico de familiaridade com tecnologia, suficiente para navegação web e preenchimento de formulários. Não é exigido conhecimento técnico nem clínico. O contexto de uso é o ambiente web, em momentos de reflexão pessoal ou de registro diário, podendo ser utilizado de forma privada e em horários escolhidos pelo próprio usuário.
-
----

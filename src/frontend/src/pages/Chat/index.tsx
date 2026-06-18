@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Heart, Shield } from "lucide-react";
 import { sendChatMessage, getTodayMessages } from "../../services/chat";
@@ -15,6 +16,7 @@ const quickActions = [
 
 
 const Chat = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 0,
@@ -155,9 +157,27 @@ const Chat = () => {
 
             <div className="chat-side-tips">
               <p className="chat-side-tips-title">Sugestoes</p>
-              <div className="chat-side-tip">🌊 Tente uma respiracao profunda</div>
-              <div className="chat-side-tip">📝 Escreva no seu diario</div>
-              <div className="chat-side-tip">🎵 Ouça uma musica calma</div>
+              <button
+                className="chat-side-tip chat-side-tip-button"
+                type="button"
+                onClick={() => navigate("/home")}
+              >
+                🌊 Tente uma respiracao profunda
+              </button>
+              <button
+                className="chat-side-tip chat-side-tip-button"
+                type="button"
+                onClick={() => navigate("/home")}
+              >
+                📝 Escreva no seu diario
+              </button>
+              <button
+                className="chat-side-tip chat-side-tip-button"
+                type="button"
+                onClick={() => window.open("https://www.youtube.com/watch?v=1ZYbU82GVz4", "_blank")}
+              >
+                🎵 Ouça uma musica calma
+              </button>
             </div>
           </motion.div>
         </div>
