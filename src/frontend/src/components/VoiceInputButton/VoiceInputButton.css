@@ -1,0 +1,50 @@
+.voice-input-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--input-border);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--primary);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.voice-input-btn--compact {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.voice-input-btn--default {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.voice-input-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: rgba(74, 144, 226, 0.08);
+}
+
+.voice-input-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.voice-input-btn--listening {
+  border-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.12);
+  color: #e74c3c;
+  animation: voice-input-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes voice-input-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.35);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(231, 76, 60, 0);
+  }
+}

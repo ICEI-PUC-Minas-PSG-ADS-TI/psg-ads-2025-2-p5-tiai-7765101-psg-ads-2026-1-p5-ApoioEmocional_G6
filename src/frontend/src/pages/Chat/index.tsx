@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Heart, Shield } from "lucide-react";
 import { sendChatMessage, getTodayMessages } from "../../services/chat";
+import VoiceInputButton, { type VoiceInputButtonHandle } from "@/components/VoiceInputButton";
+import { api } from "../../services/api";
 import "./Chat.css";
 import { ChatHistoryMessage, ChatHistoryMessageDto, Message } from "@/types/chat";
 
@@ -28,6 +30,7 @@ const Chat = () => {
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const voiceInputRef = useRef<VoiceInputButtonHandle>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
   const scrollToBottom = () => {
@@ -95,6 +98,8 @@ const Chat = () => {
     if (!text.trim()) return;
 
     if (isSending) return;
+
+    voiceInputRef.current?.stopListening();
 
     const trimmedText = text.trim();
     const userMsg: Message = { id: Date.now(), role: "user", text: text.trim() };
@@ -265,6 +270,13 @@ const Chat = () => {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Compartilhe o que esta passando na sua mente..."
                   className="chat-input"
+                />
+                <VoiceInputButton
+                  ref={voiceInputRef}
+                  value={input}
+                  onChange={setInput}
+                  disabled={isSending}
+                  variant="compact"
                 />
                 <motion.button
                   type="submit"

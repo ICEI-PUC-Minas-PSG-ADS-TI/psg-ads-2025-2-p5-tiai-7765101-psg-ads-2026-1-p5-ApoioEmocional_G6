@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import confetti from "canvas-confetti";
+import VoiceInputButton, { type VoiceInputButtonHandle } from "@/components/VoiceInputButton";
 import { addEmotion } from "@/services/emotion";
 import { toast } from "react-toastify";
 
@@ -61,6 +62,7 @@ const MoodSelector = ({ selectedMood, onSelectMood, onSaved }: MoodSelectorProps
   const [flowStep, setFlowStep] = useState<FlowStep>("mood");
   const [savedMoodEmoji, setSavedMoodEmoji] = useState<string | null>(null);
   const confettiTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const voiceInputRef = useRef<VoiceInputButtonHandle>(null);
 
   const selectedMoodEmoji = moods.find((m) => moodMapping[m.label] === selectedMood)?.emoji;
 
@@ -119,6 +121,7 @@ const MoodSelector = ({ selectedMood, onSelectMood, onSaved }: MoodSelectorProps
   };
 
   const handleBack = () => {
+    voiceInputRef.current?.stopListening();
     setText("");
     onSelectMood(null);
     setFlowStep("mood");
@@ -127,6 +130,7 @@ const MoodSelector = ({ selectedMood, onSelectMood, onSaved }: MoodSelectorProps
   const handleSave = async () => {
     if (!text.trim() || !selectedMood || isSaving) return;
 
+    voiceInputRef.current?.stopListening();
     setIsSaving(true);
     try {
       await addEmotion({ mood: selectedMood, diary: text });
@@ -238,6 +242,13 @@ const MoodSelector = ({ selectedMood, onSelectMood, onSaved }: MoodSelectorProps
             />
 
             <div className="reflection-actions">
+              <VoiceInputButton
+                ref={voiceInputRef}
+                value={text}
+                onChange={setText}
+                disabled={isSaving}
+                variant="default"
+              />
               <motion.button
                 type="button"
                 whileHover={{ scale: text.trim() ? 1.02 : 1 }}
