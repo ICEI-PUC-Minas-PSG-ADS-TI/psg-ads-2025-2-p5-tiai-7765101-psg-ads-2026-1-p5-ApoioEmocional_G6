@@ -67,7 +67,7 @@ namespace backend.Services
             foreach (var entry in entries.OrderBy(e => e.CreatedAt))
             {
                 var date = entry.CreatedAt.ToString("dd/MM/yyyy");
-                var mood = string.IsNullOrWhiteSpace(entry.Emotion?.ToString()) ? "Sem humor" : entry.Emotion.ToString();
+                var mood = string.IsNullOrWhiteSpace(entry.Emotion.ToString()) ? "Sem humor" : entry.Emotion.ToString();
                 var diary = entry.Diary?.Trim().Replace("\r", " ").Replace("\n", " ") ?? string.Empty;
                 lines.Add($"Data: {date}; Humor: {mood}; Diário: {diary}");
             }
@@ -80,7 +80,7 @@ namespace backend.Services
         {
             var parts = response
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(line => Regex.Replace(line, "^[\-\d\.\)\s]+", string.Empty).Trim())
+                .Select(line => Regex.Replace(line, @"^[\-\d\.\)\s]+", string.Empty).Trim())
                 .Where(line => !string.IsNullOrWhiteSpace(line))
                 .Take(3)
                 .ToList();
