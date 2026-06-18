@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Plus, X, Flame, Sparkles, TrendingUp, Clock } from "lucide-react";
+import { Plus, X, Flame } from "lucide-react";
 import { moodEmojiMap } from "@/components/TimelineCard/data";
+import ShortInsightsCard from "@/components/ShortInsightsCard";
 import { getAllEmotions } from "@/services/emotion";
 import { getUserProfile, UserProfileResponse } from "@/services/auth";
 import type { TimelineEntry } from "@/types/timelineCard";
@@ -344,31 +345,7 @@ const Profile = () => {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="card stat-card insights-modern"
-            >
-              <div className="insights-modern-head">
-                <Sparkles size={18} className="insights-modern-icon" />
-                <h3 className="heading-card">Insights emocionais</h3>
-              </div>
-              <div className="insights-modern-list">
-                <div className="insight-pill">
-                  <TrendingUp size={14} />
-                  <span>As suas emoções positivas cresceram nos últimos 7 dias.</span>
-                </div>
-                <div className="insight-pill">
-                  <Sparkles size={14} />
-                  <span>Costuma sentir-se mais calmo aos fins de semana.</span>
-                </div>
-                <div className="insight-pill">
-                  <Clock size={14} />
-                  <span>A maioria dos seus registos ocorre no fim do dia.</span>
-                </div>
-              </div>
-            </motion.div>
+            <ShortInsightsCard />
           </div>
         </div>
       </main>

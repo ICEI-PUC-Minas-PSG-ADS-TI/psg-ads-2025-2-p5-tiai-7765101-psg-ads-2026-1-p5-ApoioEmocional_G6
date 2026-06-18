@@ -1,0 +1,39 @@
+.insights-modern-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.insights-modern-icon {
+  color: var(--primary);
+}
+
+.insights-modern-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.insight-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.85rem 0.85rem;
+  background: var(--muted);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+
+.insights-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.85rem;
+  background: rgba(255, 71, 71, 0.08);
+  border-radius: 12px;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
