@@ -92,8 +92,11 @@ const RegisterForm = ({ onLogin }: RegisterFormProps) => {
         </form>
 
         <div className="login-links">
-          <Link to="/" className="login-btn-link">
+          <Link to="/login" className="login-btn-link">
             Já tem conta? Entrar
+          </Link>
+          <Link to="/" className="login-btn-text">
+            Voltar ao início
           </Link>
         </div>
 

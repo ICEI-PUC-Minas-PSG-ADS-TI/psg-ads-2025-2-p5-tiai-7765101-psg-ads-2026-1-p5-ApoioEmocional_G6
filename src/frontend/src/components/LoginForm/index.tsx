@@ -62,10 +62,12 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         </form>
 
         <div className="login-links">
-          <Link to="register" className="login-btn-link">
+          <Link to="/register" className="login-btn-link">
             Criar conta
           </Link>
-          <button className="login-btn-text">Esqueceu a senha?</button>
+          <Link to="/" className="login-btn-text">
+            Voltar ao início
+          </Link>
         </div>
 
         <p className="login-disclaimer">

@@ -11,6 +11,7 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { BarChart2 } from "lucide-react";
 import { getWeeklyEmotions } from "@/services/emotion";
 import type { EmotionDailyGroupResponse, EmotionResponse } from "@/types/emotion";
 
@@ -118,6 +119,8 @@ const InsightsCard = ({ refreshTrigger = 0 }: InsightsCardProps) => {
     return <div className="insights-card">Carregando insights...</div>;
   }
 
+  const hasData = lineChartData.length > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -127,65 +130,80 @@ const InsightsCard = ({ refreshTrigger = 0 }: InsightsCardProps) => {
     >
       <h3 className="insights-heading">Insights Emocionais</h3>
 
-      <div>
-        <p className="chart-label">Tendência de humor esta semana</p>
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={lineChartData}>
-              <defs>
-                <linearGradient id="moodGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#4A90E2" stopOpacity={0.3} />
-                  <stop offset="100%" stopColor="#4A90E2" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis 
-                dataKey="xKey" 
-                tickLine={false} 
-                axisLine={false} 
-                tickFormatter={(_value: string, index: number) =>
-                  lineChartData[index]?.showDayLabel ? lineChartData[index].day : ""
-                }
-                style={{ fontSize: "0.75rem" }} 
-              />
-              <YAxis hide domain={[0, 5]} />
-              <Tooltip 
-                formatter={(value: number, name: string, props: any) => {
-                  return [props.payload.labelMood, "Humor"];
-                }}
-                labelStyle={{ display: "none" }} 
-                contentStyle={{ borderRadius: "8px", border: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
-              />
-              <Area
-                type="monotone"
-                dataKey="mood"
-                stroke="#4A90E2"
-                fill="url(#moodGrad)"
-                strokeWidth={2}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+      {!hasData ? (
+        <div className="insights-empty">
+          <BarChart2 size={32} className="insights-empty-icon" />
+          <p className="insights-empty-title">Seu gráfico aparecerá aqui</p>
+          <p className="text-small insights-empty-text">
+            Registre como você está se sentindo acima para acompanhar sua tendência emocional ao longo da semana.
+          </p>
+          <p className="insights-empty-quote">
+            "Conhecer suas emoções é o primeiro passo para cuidar de si."
+          </p>
         </div>
-      </div>
+      ) : (
+        <>
+          <div>
+            <p className="chart-label">Tendência de humor esta semana</p>
+            <div className="chart-container">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={lineChartData}>
+                  <defs>
+                    <linearGradient id="moodGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#4A90E2" stopOpacity={0.3} />
+                      <stop offset="100%" stopColor="#4A90E2" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis 
+                    dataKey="xKey" 
+                    tickLine={false} 
+                    axisLine={false} 
+                    tickFormatter={(_value: string, index: number) =>
+                      lineChartData[index]?.showDayLabel ? lineChartData[index].day : ""
+                    }
+                    style={{ fontSize: "0.75rem" }} 
+                  />
+                  <YAxis hide domain={[0, 5]} />
+                  <Tooltip 
+                    formatter={(value: number, name: string, props: any) => {
+                      return [props.payload.labelMood, "Humor"];
+                    }}
+                    labelStyle={{ display: "none" }} 
+                    contentStyle={{ borderRadius: "8px", border: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="mood"
+                    stroke="#4A90E2"
+                    fill="url(#moodGrad)"
+                    strokeWidth={2}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
-      <div>
-        <p className="chart-label">Positivo vs Negativo</p>
-        <div className="chart-container-sm">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barChartData} layout="vertical">
-              <XAxis type="number" hide />
-              <YAxis 
-                type="category" 
-                dataKey="name" 
-                tickLine={false} 
-                axisLine={false} 
-                style={{ fontSize: "0.75rem" }} 
-                width={70} 
-              />
-              <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="#4A90E2" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+          <div>
+            <p className="chart-label">Positivo vs Negativo</p>
+            <div className="chart-container-sm">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={barChartData} layout="vertical">
+                  <XAxis type="number" hide />
+                  <YAxis 
+                    type="category" 
+                    dataKey="name" 
+                    tickLine={false} 
+                    axisLine={false} 
+                    style={{ fontSize: "0.75rem" }} 
+                    width={70} 
+                  />
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} fill="#4A90E2" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </>
+      )}
     </motion.div>
   );
 };

@@ -8,6 +8,7 @@ const navItems = [
   { label: "Inicio", to: "/home" },
   { label: "Chat", to: "/chat" },
   { label: "Linha do Tempo", to: "/timeline" },
+  { label: "Sobre Nós", to: "/sobre" },
 ];
 
 const Navbar = () => {

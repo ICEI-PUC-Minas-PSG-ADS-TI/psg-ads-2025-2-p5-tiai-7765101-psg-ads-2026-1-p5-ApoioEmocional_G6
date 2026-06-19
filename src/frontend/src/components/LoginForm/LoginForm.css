@@ -122,3 +122,7 @@
 .login-btn-text:hover {
   color: var(--foreground);
 }
+
+.login-links a.login-btn-text {
+  text-decoration: none;
+}

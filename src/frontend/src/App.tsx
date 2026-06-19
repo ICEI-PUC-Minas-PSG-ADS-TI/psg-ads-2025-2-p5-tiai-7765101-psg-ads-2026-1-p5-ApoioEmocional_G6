@@ -4,24 +4,19 @@ import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "./contexts/theme-context";
 import AuthLayout from "./pages/AuthLayout";
 import AuthenticatedLayout from "./pages/AuthenticatedLayout";
+import PublicLayout from "./pages/PublicLayout";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
-import { getToken, getUserIdFromToken, tokenExpired } from "./services/auth";
+import Landing from "./pages/Landing";
+import About from "./pages/About";
+import { tokenExpired } from "./services/auth";
 import "react-toastify/dist/ReactToastify.css";
 import Timeline from "./pages/Timeline";
 import Onboarding from "./pages/Onboarding";
 import Profile from "./pages/Profile";
-import { toast } from "react-toastify";
-import type { OnboardingResponses } from "./types/onboarding";
-import {
-  createUserOnboarding,
-  getUserOnboarding,
-  updateUserOnboarding,
-} from "./services/onboarding";
-import { mapOnboardingResponsesToRequest } from "./utils/mapOnboardingResponses";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -48,7 +43,6 @@ const App = () => {
     setRedirectAfterLogin("/home");
   };
 
-
   return (
     <ThemeProvider>
       <ToastContainer
@@ -65,20 +59,67 @@ const App = () => {
       />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={loggedIn ? <Navigate to="/home" replace /> : <AuthLayout />}>
+          <Route
+            path="/"
+            element={loggedIn ? <Navigate to="/home" replace /> : <PublicLayout />}
+          >
+            <Route index element={<Landing />} />
+          </Route>
+
+          <Route
+            path="/login"
+            element={loggedIn ? <Navigate to="/home" replace /> : <AuthLayout />}
+          >
             <Route index element={<LoginForm onLogin={handleLogin} />} />
-            <Route path="/register" element={<RegisterForm onLogin={handleLogin} />}
+          </Route>
+
+          <Route
+            path="/register"
+            element={loggedIn ? <Navigate to="/home" replace /> : <AuthLayout />}
+          >
+            <Route index element={<RegisterForm onLogin={handleLogin} />} />
+          </Route>
+
+          <Route
+            path="/sobre"
+            element={loggedIn ? <AuthenticatedLayout /> : <PublicLayout />}
+          >
+            <Route
+              index
+              element={<About variant={loggedIn ? "authenticated" : "public"} />}
             />
           </Route>
-          <Route element={<AuthenticatedLayout/>}>
-            <Route path="/onboarding" element={loggedIn ? (<Onboarding/>) : (<Navigate to="/" replace />)}/>
-            <Route path="/home" element={loggedIn ? <Home /> : <Navigate to="/" replace />} />
-            <Route path="/chat" element={loggedIn ? <Chat /> : <Navigate to="/" replace />} />
-            <Route path="/timeline" element={loggedIn ? <Timeline /> : <Navigate to="/" replace />} />
-            <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to="/" replace />} />
+
+          <Route element={<AuthenticatedLayout />}>
+            <Route
+              path="/onboarding"
+              element={loggedIn ? <Onboarding /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/home"
+              element={loggedIn ? <Home /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/chat"
+              element={loggedIn ? <Chat /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/timeline"
+              element={loggedIn ? <Timeline /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/profile"
+              element={loggedIn ? <Profile /> : <Navigate to="/login" replace />}
+            />
             <Route
               path="/redirect-after-login"
-              element={loggedIn ? <Navigate to={redirectAfterLogin} replace /> : <Navigate to="/" replace />}
+              element={
+                loggedIn ? (
+                  <Navigate to={redirectAfterLogin} replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
             />
           </Route>
 
